@@ -7,18 +7,16 @@
 
 <article class="content grid">
 	<PageHeading>
-		<svelte:fragment slot="title">Uses</svelte:fragment>
 		{#snippet title()}
-			CLIs
+			Uses
 		{/snippet}
 		<p class="text-balance text-center">
 			This page is a list of tools and software I use as a developer.
 		</p>
 	</PageHeading>
 	<TitledSection id="editor" class="breakout content bg-card grid">
-		<svelte:fragment slot="title">Editor</svelte:fragment>
 		{#snippet title()}
-			CLIs
+			Editor
 		{/snippet}
 		<List>
 			<li>
@@ -37,9 +35,8 @@
 		</List>
 	</TitledSection>
 	<TitledSection id="terminal" class="full-width content bg-card/40 grid">
-		<svelte:fragment slot="title">Terminal</svelte:fragment>
 		{#snippet title()}
-			CLIs
+			Terminal
 		{/snippet}
 		<List>
 			<li><Link href="https://github.com/alacritty/alacritty">Alacritty</Link></li>
@@ -63,9 +60,8 @@
 		</List>
 	</TitledSection>
 	<TitledSection id="browser-extensions" class="breakout content bg-card grid">
-		<svelte:fragment slot="title">Browser extensions</svelte:fragment>
 		{#snippet title()}
-			CLIs
+			Browser extensions
 		{/snippet}
 		<List>
 			<li><Link href="https://github.com/gorhill/uBlock">uBlock Origin</Link></li>
@@ -77,9 +73,8 @@
 		</List>
 	</TitledSection>
 	<TitledSection id="desktop-apps" class="full-width content bg-card/40 grid">
-		<svelte:fragment slot="title">Desktop Apps</svelte:fragment>
 		{#snippet title()}
-			CLIs
+			Desktop Apps
 		{/snippet}
 		<List>
 			<li><Link href="https://spotify.com">Spotify</Link></li>
