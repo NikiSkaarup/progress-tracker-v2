@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    image: nikiskaarup/skaarup-dev-v2:latest
+    pull_policy: build
+    ports:
+      - "3000:3000"
+    container_name: skaarup-dev-v2
+    restart: unless-stopped

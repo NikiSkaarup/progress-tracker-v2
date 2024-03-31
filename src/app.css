@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+
+@theme {
+	--color-*: initial;
+
+	--color-background: hsl(0 0% 100%);
+	--color-foreground: hsl(224 71.4% 4.1%);
+	--color-muted: hsl(220 14.3% 95.9%);
+	--color-muted-foreground: hsl(220 8.9% 46.1%);
+	--color-popover: hsl(0 0% 100%);
+	--color-popover-foreground: hsl(224 71.4% 4.1%);
+	--color-card: hsl(0 0% 100%);
+	--color-card-foreground: hsl(224 71.4% 4.1%);
+	--color-border: hsl(220 13% 91%);
+	--color-input: hsl(220 13% 91%);
+	--color-primary: hsl(262.1 83.3% 57.8%);
+	--color-primary-foreground: hsl(210 20% 98%);
+	--color-secondary: hsl(220 14.3% 95.9%);
+	--color-secondary-foreground: hsl(220.9 39.3% 11%);
+	--color-accent: hsl(220 14.3% 95.9%);
+	--color-accent-foreground: hsl(220.9 39.3% 11%);
+	--color-destructive: hsl(0 72.22% 50.59%);
+	--color-destructive-foreground: hsl(210 20% 98%);
+	--color-ring: hsl(262.1 83.3% 57.8%);
+}
+
+.dark {
+	--color-background: hsl(224 71.4% 4.1%);
+	--color-foreground: hsl(210 20% 98%);
+	--color-muted: hsl(215 27.9% 16.9%);
+	--color-muted-foreground: hsl(217.9 10.6% 64.9%);
+	--color-popover: hsl(224 71.4% 4.1%);
+	--color-popover-foreground: hsl(210 20% 98%);
+	--color-card: hsl(224 71.4% 4.1%);
+	--color-card-foreground: hsl(210 20% 98%);
+	--color-border: hsl(215 27.9% 16.9%);
+	--color-input: hsl(215 27.9% 16.9%);
+	--color-primary: hsl(263.4 70% 50.4%);
+	--color-primary-foreground: hsl(210 20% 98%);
+	--color-secondary: hsl(215 27.9% 16.9%);
+	--color-secondary-foreground: hsl(210 20% 98%);
+	--color-accent: hsl(215 27.9% 16.9%);
+	--color-accent-foreground: hsl(210 20% 98%);
+	--color-destructive: hsl(0 62.8% 30.6%);
+	--color-destructive-foreground: hsl(210 20% 98%);
+	--color-ring: hsl(263.4 70% 50.4%);
+}
+
+* {
+	@apply border-border;
+	min-width: 0;
+}
+
+html,
+body {
+	@apply min-h-dvh;
+}
+
+body {
+	@apply bg-background text-foreground text-pretty bg-cover bg-fixed bg-center bg-no-repeat font-sans;
+
+	background-image: radial-gradient(
+			at 0% 0%,
+			color-mix(in srgb, var(--color-primary), transparent 77%) 0px,
+			transparent 70%
+		),
+		radial-gradient(
+			at 98% 1%,
+			color-mix(in srgb, var(--color-accent), transparent 82%) 0px,
+			transparent 50%
+		);
+}
+
+.content {
+	--breakout-size: calc((var(--breakpoint-xl) - var(--breakpoint-lg)) / 2);
+	grid-template-columns:
+		[ultrawide-start] minmax(var(--spacing-4), 1fr)
+		[breakout-start] minmax(0, var(--breakout-size))
+		[content-start] min(100% - (var(--spacing-4) * 2), var(--breakpoint-lg))
+		[content-end]
+		minmax(0, var(--breakout-size)) [breakout-end]
+		minmax(var(--spacing-4), 1fr) [ultrawide-end];
+}
+
+.content > :not(.breakout, .ultrawide) {
+	grid-column: content;
+}
+
+.content > .breakout {
+	grid-column: breakout;
+}
+
+.content > .ultrawide {
+	grid-column: ultrawide;
+}
