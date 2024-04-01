@@ -1,4 +1,4 @@
 import Create from './create.svelte';
-import Edit from './edit.svelte';
+import Update from './update.svelte';
 
-export { Create, Edit };
+export { Create, Update };

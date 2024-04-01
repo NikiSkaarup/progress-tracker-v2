@@ -7,14 +7,17 @@
 	import Trash2 from 'lucide-svelte/icons/trash-2';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import tempToast from '$lib/tempToast';
 	import { cn } from '$lib/utils';
-	import getEditStore from '$lib/components/sheets/bookmarks/edit-store.svelte';
+	import getUpdateStore from '$lib/components/sheets/bookmarks/update-store.svelte';
+	import getCheckStore from '$lib/components/dialogs/bookmarks/check-store.svelte';
+	import getDeleteStore from '$lib/components/dialogs/bookmarks/delete-store.svelte';
 
 	/** @type {ClassProp & {bookmark: PTBookmark; i: number}} */
 	let { class: className, bookmark, i } = $props();
 
-	const edit = getEditStore();
+	const checkStore = getCheckStore();
+	const updateStore = getUpdateStore();
+	const deleteStore = getDeleteStore();
 </script>
 
 <div
@@ -35,32 +38,20 @@
 				<Link2 />
 			</a>
 
-			<Button variant="ghost" size="icon" onclick={() => edit.open(bookmark)}>
+			<Button variant="ghost" size="icon" onclick={() => updateStore.open(bookmark)}>
 				<PenLine />
 			</Button>
 
 			{#if bookmark.finished}
-				<Button
-					variant="ghost"
-					size="icon"
-					onclick={tempToast('open bookmark check dialog')}
-				>
+				<Button variant="ghost" size="icon" onclick={() => checkStore.open(bookmark)}>
 					<BookmarkCheck />
 				</Button>
 			{:else if bookmark.started}
-				<Button
-					variant="ghost"
-					size="icon"
-					onclick={tempToast('open bookmark check dialog')}
-				>
+				<Button variant="ghost" size="icon" onclick={() => checkStore.open(bookmark)}>
 					<Bookmark />
 				</Button>
 			{:else}
-				<Button
-					variant="ghost"
-					size="icon"
-					onclick={tempToast('open bookmark check dialog')}
-				>
+				<Button variant="ghost" size="icon" onclick={() => checkStore.open(bookmark)}>
 					<BookmarkX />
 				</Button>
 			{/if}
@@ -74,11 +65,7 @@
 				<Badge variant={tag.variant}>{tag.name}</Badge>
 			{/each}
 
-			<Button
-				variant="ghost"
-				size="icon"
-				onclick={tempToast('open alert dialog with delete confirmation')}
-			>
+			<Button variant="ghost" size="icon" onclick={() => deleteStore.open(bookmark)}>
 				<Trash2 />
 			</Button>
 		</div>

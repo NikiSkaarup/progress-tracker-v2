@@ -4,7 +4,8 @@
 	import Head from '$lib/components/ui/head.svelte';
 	import { ModeWatcher } from 'mode-watcher';
 	import { Toaster } from '$lib/components/ui/sonner';
-	import * as Bookmarks from '$lib/components/sheets/bookmarks';
+	import Dialogs from '$lib/components/dialogs/dialogs.svelte';
+	import Sheets from '$lib/components/sheets/sheets.svelte';
 
 	/** @type {{children?: import('svelte').Snippet;}} */
 	let { children } = $props();
@@ -23,5 +24,5 @@
 	{/if}
 </main>
 
-<Bookmarks.Create />
-<Bookmarks.Edit />
+<Dialogs />
+<Sheets />

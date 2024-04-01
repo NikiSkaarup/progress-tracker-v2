@@ -1,5 +1,5 @@
 type PTBookmark = {
-	id: number;
+	id: string;
 	title: string;
 	href: string;
 	finished: boolean;

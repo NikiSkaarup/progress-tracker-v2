@@ -46,6 +46,7 @@
 							reject();
 							return;
 						}
+
 						bookmarks = data.bookmarks;
 					} else {
 						reject();

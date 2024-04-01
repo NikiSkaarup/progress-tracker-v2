@@ -1,6 +1,6 @@
 /** @type PTBookmark */
 const bm = {
-	id: 1,
+	id: '1',
 	title: 'Svelte',
 	href: 'https://svelte.dev/',
 	finished: false,
@@ -17,7 +17,11 @@ const bm = {
 /** @type {Array<PTBookmark>} */
 const bookmarks = [
 	bm,
-	...Array.from({ length: 19 }, (_, i) => ({ ...bm, title: `${bm.title} ${i + 2}`, id: i + 2 }))
+	...Array.from({ length: 19 }, (_, i) => ({
+		...bm,
+		title: `${bm.title} ${i + 2}`,
+		id: (i + 2).toString()
+	}))
 ];
 
 export const load = async () => {
@@ -27,11 +31,11 @@ export const load = async () => {
 };
 
 export const actions = {
-	search: async ({ request }) => {
-		const resp = await request.formData();
-		console.log(resp);
+	search: async function ({ request }) {
+		const data = await request.formData();
+		console.log(data);
 
-		const searchValue = resp.get('search');
+		const searchValue = data.get('search');
 		if (searchValue === null) {
 			return { bookmarks };
 		}
@@ -45,5 +49,44 @@ export const actions = {
 		return {
 			bookmarks: bookmarks.filter((bm) => bm.title.includes(search))
 		};
+	},
+	'bookmarks/create': async function ({ request }) {
+		const data = await request.formData();
+		console.log(data);
+		return { bookmarks };
+	},
+	'bookmarks/update': async function ({ request }) {
+		const data = await request.formData();
+		console.log(data);
+		return { bookmarks };
+	},
+	'bookmarks/delete': async function ({ request }) {
+		const data = await request.formData();
+		console.log(data);
+
+		const idValue = data.get('id');
+
+		if (idValue === null) {
+			return { error: 'No ID provided' };
+		}
+
+		const id = idValue.toString().trim();
+		if (id.length === 0) {
+			return { error: 'ID is empty' };
+		}
+
+		console.log('Deleting bookmark', id, bookmarks.length);
+		bookmarks.splice(
+			bookmarks.findIndex((bm) => bm.id === id),
+			1
+		);
+		console.log('deleted bookmark', id, bookmarks.length);
+
+		return { bookmarks };
+	},
+	'bookmarks/check': async function ({ request }) {
+		const data = await request.formData();
+		console.log(data);
+		return { bookmarks };
 	}
 };

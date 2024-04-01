@@ -3,21 +3,21 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import getBookmarkCreate from './create-store.svelte.js';
+	import getUpdateStore from './update-store.svelte';
 	import { enhance } from '$app/forms';
-	import { getExternalPromise } from '$lib/externalPromise.js';
+	import { getExternalPromise } from '$lib/externalPromise';
 	import { toast } from 'svelte-sonner';
 
-	const store = getBookmarkCreate();
+	const store = getUpdateStore();
 
 	/** @type {Enchancement} */
 	function enhancement() {
 		const { promise, resolve, reject } = getExternalPromise();
 
 		toast.promise(promise, {
-			loading: 'Adding new bookmark...',
-			success: 'Bookmark added',
-			error: 'failed to add bookmark'
+			loading: 'Updating bookmark...',
+			success: 'bookmark updated',
+			error: 'failed to update bookmark'
 		});
 
 		return async ({ result, update }) => {
@@ -47,34 +47,47 @@
 		if (!event.valueOf()) {
 			store.close();
 		} else {
-			store.open();
+			store.open(store.bookmark);
 		}
 	}}
 >
 	<Sheet.Content side="right">
 		<Sheet.Header>
-			<Sheet.Title>Create bookmark</Sheet.Title>
-			<Sheet.Description>Add new bookmark to your collection</Sheet.Description>
+			<Sheet.Title>Update bookmark</Sheet.Title>
+			<Sheet.Description>Make changes to your bookmark</Sheet.Description>
 		</Sheet.Header>
 		<form
-			id="create-bookmark-form"
-			action="/?/bookmarks/create"
+			id="update-bookmark-form"
+			action="/?/bookmarks/update"
 			method="post"
 			class="grid gap-4 py-4"
 			use:enhance={enhancement}
 		>
+			<input name="id" type="hidden" value={store.bookmark.id} />
 			<div class="grid grid-cols-4 items-center gap-4">
 				<Label for="name" class="text-right">Name</Label>
-				<Input id="name" name="name" placeholder="Example" class="col-span-3" />
+				<Input
+					id="name"
+					name="name"
+					placeholder="Example"
+					class="col-span-3"
+					bind:value={store.bookmark.title}
+				/>
 			</div>
 			<div class="grid grid-cols-4 items-center gap-4">
 				<Label for="href" class="text-right">Href</Label>
-				<Input id="href" name="href" placeholder="https://example.com" class="col-span-3" />
+				<Input
+					id="href"
+					name="href"
+					placeholder="https://example.com"
+					class="col-span-3"
+					bind:value={store.bookmark.href}
+				/>
 			</div>
 			TODO: Add tags
 		</form>
 		<Sheet.Footer>
-			<Button type="submit" form="create-bookmark-form">Save changes</Button>
+			<Button type="submit" form="update-bookmark-form">Save changes</Button>
 		</Sheet.Footer>
 	</Sheet.Content>
 </Sheet.Root>
