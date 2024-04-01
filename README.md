@@ -1,10 +1,10 @@
-# skaarup.dev v2
+# progress tracker v2
 
-For now it is just a portfolio site, but in the future it should also have links to projects I've worked on and am working on.
+Completion progress tracker for various things like, tv shows, movies and anime
 
-[Prod Site](https://skaarup.dev)
+[Prod Site](https://pt.skaarup.dev)
 
-~~[Dev Site](https://dev.skaarup.dev)~~ (Not available at the moment, test in prod atm)
+~~[Dev Site](https://dev.pt.skaarup.dev)~~ (Not available at the moment, test in prod atm)
 
 ## Developing
 
