@@ -1,6 +1,6 @@
 <script>
 	import { cn } from '$lib/utils';
-	/** @type {{href: string; class?: string | undefined | null; children: import('svelte').Snippet}} */
+	/** @type {ClassProp & ChildrenProp & {href: string;}} */
 	let { href, class: className, children } = $props();
 	/** @type {string | null | undefined}*/
 	let target = !href.startsWith('/') ? '_blank' : null;
@@ -17,5 +17,7 @@
 		className
 	)}
 >
-	{@render children()}
+	{#if children}
+		{@render children()}
+	{/if}
 </a>

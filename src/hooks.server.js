@@ -11,9 +11,9 @@ export const handle = async ({ event, resolve }) => {
 	return result;
 };
 
-// export async function handleFetch({ request, fetch }) {
-// 	return fetch(request);
-// }
+export async function handleFetch({ request, fetch }) {
+	return fetch(request);
+}
 
 export async function handleError({ error, event, status, message }) {
 	console.error({

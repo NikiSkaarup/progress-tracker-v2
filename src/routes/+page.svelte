@@ -1,32 +1,25 @@
 <script>
-	import Link from '$lib/components/ui/link.svelte';
-	import List from '$lib/components/ui/list.svelte';
 	import PageHeading from '$lib/components/ui/page-heading.svelte';
 	import TitledSection from '$lib/components/ui/titled-section.svelte';
+	import SearchSection from '$lib/components/sections/search-section.svelte';
+	import * as Bookmarks from '$lib/components/ui/bookmarks';
 
-	const pages = [
-		{ name: 'About', href: '/about' },
-		{ name: 'Ideas', href: '/ideas' },
-		{ name: 'Now', href: '/now' },
-		{ name: 'Uses', href: '/uses' }
-	];
+	let { data } = $props();
+	let bookmarks = $state(data.bookmarks);
 </script>
 
 <article class="content grid">
 	<PageHeading>
 		{#snippet title()}
-			Typing..
+			Progress Tracker
 		{/snippet}
-		<!-- <p class="text-balance text-center">...typing</p> -->
 	</PageHeading>
-	<TitledSection id="pages" class="breakout content bg-card text-card-foreground grid">
-		{#snippet title()}
-			Pages
-		{/snippet}
-		<List class="flex flex-row gap-2">
-			{#each pages as page}
-				<li><Link href={page.href}>{page.name}</Link></li>
-			{/each}
-		</List>
-	</TitledSection>
+
+	<SearchSection bind:bookmarks />
+
+	<Bookmarks.Root>
+		{#each bookmarks as bookmark, i (bookmark.id)}
+			<Bookmarks.Item {bookmark} {i}></Bookmarks.Item>
+		{/each}
+	</Bookmarks.Root>
 </article>

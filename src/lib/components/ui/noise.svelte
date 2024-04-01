@@ -1,6 +1,6 @@
 <script>
 	import { cn } from '$lib/utils';
-	/** @type {{
+	/** @type {ClassProp & {
 	 * id: string;
 	 * begin: string;
 	 * dur?: string | number;
@@ -10,7 +10,6 @@
 	 * seeds?: string;
 	 * scales?: string;
 	 * baseFrequency?: string;
-	 * class?: string | undefined | null;
 	 * }} */
 	let {
 		id,

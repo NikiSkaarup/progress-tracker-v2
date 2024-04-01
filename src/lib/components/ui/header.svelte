@@ -1,5 +1,10 @@
 <script>
 	import Avatar from './avatar.svelte';
+	import { Button } from '$lib/components/ui/button';
+	import Plus from 'lucide-svelte/icons/plus';
+	import tempToast from '$lib/tempToast';
+	import getBookmarkCreate from '$lib/components/sheets/bookmarks/create-store.svelte';
+	const create = getBookmarkCreate();
 </script>
 
 <header
@@ -13,15 +18,18 @@
 	</a>
 	<div class="grid grid-cols-3">
 		<div class="flex items-center justify-start gap-2 md:gap-4">
-			<a href="/" class="text-center"> Niki Wix Skaarup </a>
-		</div>
-
-		<div class="flex items-center justify-center">
 			<a href="/" class="text-center"> Progress Tracker </a>
 		</div>
 
+		<div class="flex items-center justify-center">
+			<!-- <a href="/" class="text-center"> Progress Tracker </a> -->
+		</div>
+
 		<div class="flex items-center justify-end gap-2 md:gap-4">
-			<Avatar id="avatar" class="h-12" />
+			<Button variant="ghost" size="icon" onclick={create.open}>
+				<Plus />
+			</Button>
+			<Avatar id="avatar" class="h-9" />
 		</div>
 	</div>
 </header>

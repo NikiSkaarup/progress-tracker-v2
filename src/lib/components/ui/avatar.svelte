@@ -2,7 +2,7 @@
 	import portrait from '$lib/../images/portrait-greyscale_48x48.png';
 	import { cn } from '$lib/utils';
 	import Noise from './noise.svelte';
-	/** @type {{id: string; class?: string | undefined | null;}} */
+	/** @type {ClassProp & {id: string;}} */
 	let { id, class: className } = $props();
 	let noiseId = $derived(id + '-noise');
 </script>

@@ -1,6 +1,6 @@
 <script>
 	import { cn } from '$lib/utils';
-	/** @type {{class?: string | undefined | null; children?: import('svelte').Snippet, title: import('svelte').Snippet}} */
+	/** @type {ClassProp & ChildrenProp & {title: Children}} */
 	let { class: className, children, title } = $props();
 </script>
 
