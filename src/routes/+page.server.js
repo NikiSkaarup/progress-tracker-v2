@@ -20,7 +20,10 @@ const bookmarks = [
 	...Array.from({ length: 19 }, (_, i) => ({
 		...bm,
 		title: `${bm.title} ${i + 2}`,
-		id: (i + 2).toString()
+		id: (i + 2).toString(),
+		finished: i % 2 === 0 ? true : Math.random() > 0.5,
+		started: i % 2 === 0 ? true : Math.random() > 0.5,
+		updated: i % 2 === 0 ? true : Math.random() > 0.5
 	}))
 ];
 

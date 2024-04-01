@@ -56,8 +56,11 @@
 				</Button>
 			{/if}
 
-			<span>
+			<span class="inline-flex items-center gap-1">
 				{bookmark.title}
+				{#if bookmark.updated}
+					<small class="text-card-muted">- updated</small>
+				{/if}
 			</span>
 		</div>
 		<div class="flex items-center gap-1">
