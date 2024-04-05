@@ -6,5 +6,5 @@ export {
 	Item,
 	//
 	Root as Bookmarks,
-	Item as BookmarksItem
+	Item as BookmarksItem,
 };

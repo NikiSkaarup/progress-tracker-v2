@@ -14,6 +14,6 @@ export default function getBookmarkCreate() {
 			return isOpen;
 		},
 		open,
-		close
+		close,
 	};
 }

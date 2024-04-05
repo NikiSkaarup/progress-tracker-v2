@@ -1,5 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
+
 declare global {
 	declare namespace App {
 		interface Locals {
@@ -13,4 +14,4 @@ declare global {
 	var performanceObserver: PerformanceObserver;
 }
 
-export {};
+export type {};

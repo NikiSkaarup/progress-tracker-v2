@@ -27,6 +27,6 @@ export default function getDeleteStore() {
 			return /** @type {PTBookmark} */ (bookmark);
 		},
 		open,
-		close
+		close,
 	};
 }

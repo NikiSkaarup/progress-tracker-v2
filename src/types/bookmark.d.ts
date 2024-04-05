@@ -5,5 +5,8 @@ type PTBookmark = {
 	finished: boolean;
 	started: boolean;
 	updated: boolean;
-	tags: { name: string; variant: import('$lib/components/ui/badge/index.ts').Variant }[];
+	tags: {
+		name: string;
+		variant: import('$lib/components/ui/badge/index.ts').Variant;
+	}[];
 };

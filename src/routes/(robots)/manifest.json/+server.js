@@ -9,5 +9,5 @@ export const GET = async () =>
 		theme_color: '#371D85',
 		description: 'Portfolio / Blog',
 		icons: [],
-		related_applications: []
+		related_applications: [],
 	});

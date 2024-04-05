@@ -1,11 +1,11 @@
 <script>
 	import '$lib/../app.css';
-	import Header from '$lib/components/ui/header.svelte';
-	import Head from '$lib/components/ui/head.svelte';
-	import { ModeWatcher } from 'mode-watcher';
-	import { Toaster } from '$lib/components/ui/sonner';
 	import Dialogs from '$lib/components/dialogs/dialogs.svelte';
 	import Sheets from '$lib/components/sheets/sheets.svelte';
+	import Head from '$lib/components/ui/head.svelte';
+	import Header from '$lib/components/ui/header.svelte';
+	import { Toaster } from '$lib/components/ui/sonner';
+	import { ModeWatcher } from 'mode-watcher';
 
 	/** @type {{children?: import('svelte').Snippet;}} */
 	let { children } = $props();

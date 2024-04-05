@@ -1,9 +1,9 @@
 <script>
-	import PageHeading from '$lib/components/ui/page-heading.svelte';
 	import SearchSection from '$lib/components/sections/search-section.svelte';
 	import * as Bookmarks from '$lib/components/ui/bookmarks';
+	import PageHeading from '$lib/components/ui/page-heading.svelte';
 
-	let { data, form } = $props();
+	const { data, form } = $props();
 	let bookmarks = $state(data.bookmarks);
 
 	$effect(() => {

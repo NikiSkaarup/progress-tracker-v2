@@ -52,5 +52,5 @@ export default {
 	bgMagenta,
 	bgCyan,
 	bgWhite,
-	bgGray
+	bgGray,
 };

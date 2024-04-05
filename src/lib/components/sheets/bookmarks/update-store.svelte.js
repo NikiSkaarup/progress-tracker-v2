@@ -26,6 +26,6 @@ export default function getEditStore() {
 			return /** @type {PTBookmark} */ (bookmark);
 		},
 		open,
-		close
+		close,
 	};
 }

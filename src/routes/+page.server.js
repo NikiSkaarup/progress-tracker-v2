@@ -10,8 +10,8 @@ const bm = {
 		{ name: 'default', variant: 'default' },
 		{ name: 'destructive', variant: 'destructive' },
 		{ name: 'outline', variant: 'outline' },
-		{ name: 'secondary', variant: 'secondary' }
-	]
+		{ name: 'secondary', variant: 'secondary' },
+	],
 };
 
 /** @type {Array<PTBookmark>} */
@@ -23,18 +23,18 @@ const bookmarks = [
 		id: (i + 2).toString(),
 		finished: i % 2 === 0 ? true : Math.random() > 0.5,
 		started: i % 2 === 0 ? true : Math.random() > 0.5,
-		updated: i % 2 === 0 ? true : Math.random() > 0.5
-	}))
+		updated: i % 2 === 0 ? true : Math.random() > 0.5,
+	})),
 ];
 
 export const load = async () => {
 	return {
-		bookmarks
+		bookmarks,
 	};
 };
 
 export const actions = {
-	search: async function ({ request }) {
+	search: async ({ request }) => {
 		const data = await request.formData();
 		console.log(data);
 
@@ -50,20 +50,20 @@ export const actions = {
 		}
 
 		return {
-			bookmarks: bookmarks.filter((bm) => bm.title.includes(search))
+			bookmarks: bookmarks.filter((bm) => bm.title.includes(search)),
 		};
 	},
-	'bookmarks/create': async function ({ request }) {
+	'bookmarks/create': async ({ request }) => {
 		const data = await request.formData();
 		console.log(data);
 		return { bookmarks };
 	},
-	'bookmarks/update': async function ({ request }) {
+	'bookmarks/update': async ({ request }) => {
 		const data = await request.formData();
 		console.log(data);
 		return { bookmarks };
 	},
-	'bookmarks/delete': async function ({ request }) {
+	'bookmarks/delete': async ({ request }) => {
 		const data = await request.formData();
 		console.log(data);
 
@@ -81,15 +81,15 @@ export const actions = {
 		console.log('Deleting bookmark', id, bookmarks.length);
 		bookmarks.splice(
 			bookmarks.findIndex((bm) => bm.id === id),
-			1
+			1,
 		);
 		console.log('deleted bookmark', id, bookmarks.length);
 
 		return { bookmarks };
 	},
-	'bookmarks/check': async function ({ request }) {
+	'bookmarks/check': async ({ request }) => {
 		const data = await request.formData();
 		console.log(data);
 		return { bookmarks };
-	}
+	},
 };
