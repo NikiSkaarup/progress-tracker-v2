@@ -1,5 +1,5 @@
-import Root from './bookmarks.svelte';
 import Item from './bookmarks-item.svelte';
+import Root from './bookmarks.svelte';
 
 export {
 	Root,

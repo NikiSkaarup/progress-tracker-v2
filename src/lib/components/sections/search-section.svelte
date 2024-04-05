@@ -1,15 +1,15 @@
 <script>
-	import Search from 'lucide-svelte/icons/search';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { enhance } from '$app/forms';
-	import * as Card from '$lib/components/ui/card';
-	import { toast } from 'svelte-sonner';
-	import { getExternalPromise } from '$lib/externalPromise';
+import { enhance } from '$app/forms';
+import { Button } from '$lib/components/ui/button';
+import * as Card from '$lib/components/ui/card';
+import { Input } from '$lib/components/ui/input';
+import { Label } from '$lib/components/ui/label';
+import { getExternalPromise } from '$lib/externalPromise';
+import Search from 'lucide-svelte/icons/search';
+import { toast } from 'svelte-sonner';
 
-	/** @type {{bookmarks: Array<PTBookmark>;}} */
-	let { bookmarks = $bindable() } = $props();
+/** @type {{bookmarks: Array<PTBookmark>;}} */
+let { bookmarks = $bindable() } = $props();
 </script>
 
 <Card.Root class="breakout content grid rounded-none">

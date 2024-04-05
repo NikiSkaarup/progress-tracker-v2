@@ -1,23 +1,23 @@
 <script>
-	import Bookmark from 'lucide-svelte/icons/bookmark';
-	import BookmarkCheck from 'lucide-svelte/icons/bookmark-check';
-	import BookmarkX from 'lucide-svelte/icons/bookmark-x';
-	import PenLine from 'lucide-svelte/icons/pen-line';
-	import Link2 from 'lucide-svelte/icons/link-2';
-	import Trash2 from 'lucide-svelte/icons/trash-2';
-	import { Badge } from '$lib/components/ui/badge';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import { cn } from '$lib/utils';
-	import getUpdateStore from '$lib/components/sheets/bookmarks/update-store.svelte';
-	import getCheckStore from '$lib/components/dialogs/bookmarks/check-store.svelte';
-	import getDeleteStore from '$lib/components/dialogs/bookmarks/delete-store.svelte';
+import getCheckStore from '$lib/components/dialogs/bookmarks/check-store.svelte';
+import getDeleteStore from '$lib/components/dialogs/bookmarks/delete-store.svelte';
+import getUpdateStore from '$lib/components/sheets/bookmarks/update-store.svelte';
+import { Badge } from '$lib/components/ui/badge';
+import { Button, buttonVariants } from '$lib/components/ui/button';
+import { cn } from '$lib/utils';
+import Bookmark from 'lucide-svelte/icons/bookmark';
+import BookmarkCheck from 'lucide-svelte/icons/bookmark-check';
+import BookmarkX from 'lucide-svelte/icons/bookmark-x';
+import Link2 from 'lucide-svelte/icons/link-2';
+import PenLine from 'lucide-svelte/icons/pen-line';
+import Trash2 from 'lucide-svelte/icons/trash-2';
 
-	/** @type {ClassProp & {bookmark: PTBookmark; i: number}} */
-	let { class: className, bookmark, i } = $props();
+/** @type {ClassProp & {bookmark: PTBookmark; i: number}} */
+let { class: className, bookmark, i } = $props();
 
-	const checkStore = getCheckStore();
-	const updateStore = getUpdateStore();
-	const deleteStore = getDeleteStore();
+const checkStore = getCheckStore();
+const updateStore = getUpdateStore();
+const deleteStore = getDeleteStore();
 </script>
 
 <div

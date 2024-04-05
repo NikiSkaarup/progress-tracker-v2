@@ -1,42 +1,42 @@
 <script>
-	import { enhance } from '$app/forms';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import * as Sheet from '$lib/components/ui/sheet';
-	import { getExternalPromise } from '$lib/externalPromise.js';
-	import { toast } from 'svelte-sonner';
-	import getBookmarkCreate from './create-store.svelte.js';
+import { enhance } from '$app/forms';
+import { Button } from '$lib/components/ui/button';
+import { Input } from '$lib/components/ui/input';
+import { Label } from '$lib/components/ui/label';
+import * as Sheet from '$lib/components/ui/sheet';
+import { getExternalPromise } from '$lib/externalPromise.js';
+import { toast } from 'svelte-sonner';
+import getBookmarkCreate from './create-store.svelte.js';
 
-	const store = getBookmarkCreate();
+const store = getBookmarkCreate();
 
-	/** @type {Enchancement} */
-	function enhancement() {
-		const { promise, resolve, reject } = getExternalPromise();
+/** @type {Enchancement} */
+function enhancement() {
+	const { promise, resolve, reject } = getExternalPromise();
 
-		toast.promise(promise, {
-			loading: 'Adding new bookmark...',
-			success: 'Bookmark added',
-			error: 'failed to add bookmark'
-		});
+	toast.promise(promise, {
+		loading: 'Adding new bookmark...',
+		success: 'Bookmark added',
+		error: 'failed to add bookmark',
+	});
 
-		return async ({ result, update }) => {
-			if (result.type === 'error') {
-				reject();
-			} else if (result.type === 'failure') {
-				reject();
-			} else if (result.type === 'redirect') {
-				resolve();
-				update();
-			} else if (result.type === 'success') {
-				resolve();
-				store.close();
-				update();
-			} else {
-				reject();
-			}
-		};
-	}
+	return async ({ result, update }) => {
+		if (result.type === 'error') {
+			reject();
+		} else if (result.type === 'failure') {
+			reject();
+		} else if (result.type === 'redirect') {
+			resolve();
+			update();
+		} else if (result.type === 'success') {
+			resolve();
+			store.close();
+			update();
+		} else {
+			reject();
+		}
+	};
+}
 </script>
 
 <Sheet.Root

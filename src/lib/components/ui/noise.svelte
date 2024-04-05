@@ -1,28 +1,28 @@
 <script>
-	import { cn } from '$lib/utils';
-	/** @type {ClassProp & {
-	 * id: string;
-	 * begin: string;
-	 * dur?: string | number;
-	 * repeatCount?: string | number;
-	 * seed?: string | number;
-	 * scale?: string | number;
-	 * seeds?: string;
-	 * scales?: string;
-	 * baseFrequency?: string;
-	 * }} */
-	let {
-		id,
-		begin,
-		dur = 0.8,
-		repeatCount = 1,
-		seed = 0,
-		scale = 0,
-		seeds = '0;200;0',
-		scales = '0;20;0',
-		baseFrequency = '0.7,0.8',
-		class: className
-	} = $props();
+import { cn } from '$lib/utils';
+/** @type {ClassProp & {
+ * id: string;
+ * begin: string;
+ * dur?: string | number;
+ * repeatCount?: string | number;
+ * seed?: string | number;
+ * scale?: string | number;
+ * seeds?: string;
+ * scales?: string;
+ * baseFrequency?: string;
+ * }} */
+let {
+	id,
+	begin,
+	dur = 0.8,
+	repeatCount = 1,
+	seed = 0,
+	scale = 0,
+	seeds = '0;200;0',
+	scales = '0;20;0',
+	baseFrequency = '0.7,0.8',
+	class: className,
+} = $props();
 </script>
 
 <svg

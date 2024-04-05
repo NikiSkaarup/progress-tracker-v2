@@ -1,7 +1,7 @@
 <script>
-	import { cn } from '$lib/utils';
-	/** @type {ClassProp & ChildrenProp & {title: Children}} */
-	let { class: className, children, title } = $props();
+import { cn } from '$lib/utils';
+/** @type {ClassProp & ChildrenProp & {title: Children}} */
+let { class: className, children, title } = $props();
 </script>
 
 <header class={cn('flex flex-col gap-2 py-8', className)}>

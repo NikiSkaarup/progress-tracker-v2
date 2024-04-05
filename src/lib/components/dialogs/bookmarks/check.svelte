@@ -1,43 +1,43 @@
 <script>
-	import { Button } from '$lib/components/ui/button';
-	import * as Dialog from '$lib/components/ui/dialog';
-	import { enhance } from '$app/forms';
-	import { getExternalPromise } from '$lib/externalPromise';
-	import { toast } from 'svelte-sonner';
-	import getCheckStore from './check-store.svelte';
-	import Bookmark from 'lucide-svelte/icons/bookmark';
-	import BookmarkCheck from 'lucide-svelte/icons/bookmark-check';
-	import BookmarkX from 'lucide-svelte/icons/bookmark-x';
+import { enhance } from '$app/forms';
+import { Button } from '$lib/components/ui/button';
+import * as Dialog from '$lib/components/ui/dialog';
+import { getExternalPromise } from '$lib/externalPromise';
+import Bookmark from 'lucide-svelte/icons/bookmark';
+import BookmarkCheck from 'lucide-svelte/icons/bookmark-check';
+import BookmarkX from 'lucide-svelte/icons/bookmark-x';
+import { toast } from 'svelte-sonner';
+import getCheckStore from './check-store.svelte';
 
-	const store = getCheckStore();
+const store = getCheckStore();
 
-	/** @type {Enchancement} */
-	function enhancement() {
-		const { promise, resolve, reject } = getExternalPromise();
+/** @type {Enchancement} */
+function enhancement() {
+	const { promise, resolve, reject } = getExternalPromise();
 
-		toast.promise(promise, {
-			loading: 'Setting bookmark...',
-			success: 'bookmark set',
-			error: 'failed to set bookmark'
-		});
+	toast.promise(promise, {
+		loading: 'Setting bookmark...',
+		success: 'bookmark set',
+		error: 'failed to set bookmark',
+	});
 
-		return async ({ result, update }) => {
-			if (result.type === 'error') {
-				reject();
-			} else if (result.type === 'failure') {
-				reject();
-			} else if (result.type === 'redirect') {
-				resolve();
-				update();
-			} else if (result.type === 'success') {
-				resolve();
-				store.close();
-				update();
-			} else {
-				reject();
-			}
-		};
-	}
+	return async ({ result, update }) => {
+		if (result.type === 'error') {
+			reject();
+		} else if (result.type === 'failure') {
+			reject();
+		} else if (result.type === 'redirect') {
+			resolve();
+			update();
+		} else if (result.type === 'success') {
+			resolve();
+			store.close();
+			update();
+		} else {
+			reject();
+		}
+	};
+}
 </script>
 
 <Dialog.Root

@@ -1,16 +1,16 @@
 <script>
-	import { page } from '$app/stores';
+import { page } from '$app/stores';
 
-	let title = $derived(
-		$page.url.pathname === '/' || $page.data.title.length === 0
-			? $page.data.titleBase
-			: `${$page.data.titleBase} - ${$page.data.title}`
-	);
+let title = $derived(
+	$page.url.pathname === '/' || $page.data.title.length === 0
+		? $page.data.titleBase
+		: `${$page.data.titleBase} - ${$page.data.title}`,
+);
 
-	/** @type {string}*/
-	let description = $derived($page.data.snippet ?? '');
-	/** @type {string}*/
-	let image = $derived($page.data.image ?? '');
+/** @type {string}*/
+let description = $derived($page.data.snippet ?? '');
+/** @type {string}*/
+let image = $derived($page.data.image ?? '');
 </script>
 
 <svelte:head>

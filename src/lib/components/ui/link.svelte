@@ -1,11 +1,11 @@
 <script>
-	import { cn } from '$lib/utils';
-	/** @type {ClassProp & ChildrenProp & {href: string;}} */
-	let { href, class: className, children } = $props();
-	/** @type {string | null | undefined}*/
-	let target = !href.startsWith('/') ? '_blank' : null;
-	/** @type {string | null | undefined}*/
-	let rel = !href.startsWith('/') ? 'noopener noreferrer' : null;
+import { cn } from '$lib/utils';
+/** @type {ClassProp & ChildrenProp & {href: string;}} */
+let { href, class: className, children } = $props();
+/** @type {string | null | undefined}*/
+let target = !href.startsWith('/') ? '_blank' : null;
+/** @type {string | null | undefined}*/
+let rel = !href.startsWith('/') ? 'noopener noreferrer' : null;
 </script>
 
 <a
