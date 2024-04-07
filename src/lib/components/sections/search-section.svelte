@@ -1,15 +1,16 @@
 <script>
-import { enhance } from '$app/forms';
-import { Button } from '$lib/components/ui/button';
-import * as Card from '$lib/components/ui/card';
-import { Input } from '$lib/components/ui/input';
-import { Label } from '$lib/components/ui/label';
-import { getExternalPromise } from '$lib/externalPromise';
-import Search from 'lucide-svelte/icons/search';
-import { toast } from 'svelte-sonner';
+	import { enhance } from '$app/forms';
+	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/components/ui/card';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
+	import { getExternalPromise } from '$lib/externalPromise';
+	import Search from 'lucide-svelte/icons/search';
+	import { toast } from 'svelte-sonner';
 
-/** @type {{bookmarks: Array<PTBookmark>;}} */
-let { bookmarks = $bindable() } = $props();
+	/** @typedef {import('$lib/server/db/schema.js').SelectBookmarkWithTags} SelectBookmarkWithTags */
+	/** @type {{bookmarks: Array<SelectBookmarkWithTags>}} */
+	let { bookmarks = $bindable() } = $props();
 </script>
 
 <Card.Root class="breakout content grid rounded-none">
@@ -40,7 +41,7 @@ let { bookmarks = $bindable() } = $props();
 						update();
 					} else if (result.type === 'success') {
 						resolve();
-						/** @type {{bookmarks: Array<PTBookmark>}} */
+						/** @type {{bookmarks: Array<SelectBookmarkWithTags>}} */
 						const data = /** @type {any} */ (result.data);
 						if (!Array.isArray(data.bookmarks)) {
 							reject();

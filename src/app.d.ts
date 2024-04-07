@@ -1,3 +1,6 @@
+import type { Database } from 'bun:sqlite';
+import type { BunSQLiteDatabase } from 'drizzle-orm/bun-sqlite';
+
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 
@@ -11,7 +14,8 @@ declare global {
 		// interface Platform {}
 	}
 
+	var db: Database;
+	var drizzleDB: BunSQLiteDatabase;
 	var performanceObserver: PerformanceObserver;
+	var wrappedTimers: Map<string, import('../wrapped-timer').WrappedTimer>;
 }
-
-export type {};

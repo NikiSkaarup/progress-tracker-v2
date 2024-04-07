@@ -53,6 +53,6 @@
     "formatWithErrors": true,
     "lineWidth": 100,
     "indentStyle": "space",
-    "ignore": ["node_modules/**", "./.svelte-kit", "./build"]
+    "ignore": ["node_modules/**", "./.svelte-kit", "*.svelte", "./build"]
   }
 }

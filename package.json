@@ -4,13 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "migrate": "bun --bun run ./src/lib/server/db/migrate.js",
+    "generate": "drizzle-kit generate:sqlite --config=./drizzle.config.js",
+    "studio": "bunx --bun drizzle-kit studio --config=./drizzle.config.js",
     "start": "bun run ./build",
     "dev": "bunx --bun vite dev",
     "build": "bunx --bun vite build",
     "preview": "bunx --bun vite preview",
     "build:preview": "bunx --bun vite build && PORT=5173 bun ./build",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "biome lint .",
     "lint:fix": "biome lint --apply .",
     "format": "biome format --write .",
@@ -24,6 +27,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/vite": "^4.0.0-alpha.13",
     "@types/bun": "latest",
+    "drizzle-kit": "^0.20.14",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.36.0-next.13",
@@ -32,6 +36,7 @@
     "prettier": "^4.0.0-alpha.8",
     "prettier-plugin-svelte": "^3.2.2",
     "prettier-plugin-tailwindcss": "^0.5.13",
+    "sqids": "^0.3.0",
     "svelte": "^5.0.0-next.94",
     "svelte-adapter-bun": "^0.5.2",
     "svelte-check": "^3.6.9",
@@ -42,6 +47,7 @@
   "dependencies": {
     "bits-ui": "^0.21.2",
     "clsx": "^2.1.0",
+    "drizzle-orm": "^0.30.7",
     "mode-watcher": "^0.3.0",
     "svelte-radix": "^1.1.0",
     "svelte-sonner": "^0.3.21",
@@ -49,5 +55,11 @@
     "tailwind-variants": "^0.2.1",
     "vaul-svelte": "^0.3.0"
   },
-  "trustedDependencies": ["@biomejs/biome", "@sveltejs/kit", "esbuild", "svelte-preprocess"]
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "@sveltejs/kit",
+    "esbuild",
+    "es5-ext",
+    "svelte-preprocess"
+  ]
 }

@@ -1,5 +1,5 @@
 <script>
-import * as BookmarkSheets from '$lib/components/sheets/bookmarks';
+	import * as BookmarkSheets from '$lib/components/sheets/bookmarks';
 </script>
 
 <BookmarkSheets.Create />

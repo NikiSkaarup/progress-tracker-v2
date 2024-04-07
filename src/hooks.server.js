@@ -1,26 +1,24 @@
 import { dev } from '$app/environment';
 import colors from '$lib/server/colors';
-import { sequence } from '@sveltejs/kit/hooks';
 import { nanoid } from 'nanoid';
 
 /** @type {import('@sveltejs/kit').Handle} */
-async function handler({ event, resolve }) {
+export async function handle({ event, resolve }) {
 	const requestId = nanoid();
 	event.locals.requestId = requestId;
 	performance.mark(requestId);
 	const result = await resolve(event);
 	performance.measure(`request ${requestId}`, requestId);
 	return result;
+	// return resolve(event);
 }
-
-export const handle = sequence(handler);
 
 // export async function handleFetch({ request, fetch }) {
 // 	return fetch(request);
 // }
 
 /** @type {import('@sveltejs/kit').HandleServerError} */
-async function errorHandler({ error, event, status, message }) {
+export async function handleError({ error, event, status, message }) {
 	console.error('An error occurred on the server side:', status, message, error, event);
 
 	if (error instanceof Error) {
@@ -31,8 +29,6 @@ async function errorHandler({ error, event, status, message }) {
 		message: 'Whoops!',
 	};
 }
-
-export const handleError = errorHandler;
 
 /** @type {PerformanceObserverCallback} */
 function observerCallback(entries) {

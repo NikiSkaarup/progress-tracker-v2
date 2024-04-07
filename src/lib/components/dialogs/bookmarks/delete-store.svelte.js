@@ -1,9 +1,11 @@
 let isOpen = $state(false);
 
-/** @type {PTBookmark | undefined} */
+/** @typedef {import('$lib/server/db/schema.js').SelectBookmark} SelectBookmark */
+
+/** @type {SelectBookmark | undefined} */
 let bookmark = $state();
 
-/** @param inputBookmark {PTBookmark | undefined} */
+/** @param inputBookmark {SelectBookmark | undefined} */
 function open(inputBookmark) {
 	if (!inputBookmark) {
 		console.error("Can't open delete bookmark dialog without a bookmark");
@@ -24,7 +26,7 @@ export default function getDeleteStore() {
 			return isOpen;
 		},
 		get bookmark() {
-			return /** @type {PTBookmark} */ (bookmark);
+			return /** @type {SelectBookmark} */ (bookmark);
 		},
 		open,
 		close,

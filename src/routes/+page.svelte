@@ -1,20 +1,16 @@
 <script>
-import SearchSection from '$lib/components/sections/search-section.svelte';
-import * as Bookmarks from '$lib/components/ui/bookmarks';
-import PageHeading from '$lib/components/ui/page-heading.svelte';
+	import SearchSection from '$lib/components/sections/search-section.svelte';
+	import * as Bookmarks from '$lib/components/ui/bookmarks';
+	import PageHeading from '$lib/components/ui/page-heading.svelte';
 
-const { data, form } = $props();
-let bookmarks = $state(data.bookmarks);
+	let { data, form } = $props();
+	let bookmarks = $state(data.bookmarks);
 
-$effect(() => {
-	if (form === null) {
-		return;
-	}
-
-	if (Array.isArray(form.bookmarks)) {
-		bookmarks = form.bookmarks;
-	}
-});
+	$effect(() => {
+		if (Array.isArray(form?.bookmarks)) {
+			bookmarks = form.bookmarks;
+		}
+	});
 </script>
 
 <article class="content grid">

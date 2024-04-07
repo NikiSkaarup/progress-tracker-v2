@@ -1,43 +1,43 @@
 <script>
-import { enhance } from '$app/forms';
-import { Button } from '$lib/components/ui/button';
-import * as Dialog from '$lib/components/ui/dialog';
-import { getExternalPromise } from '$lib/externalPromise';
-import Bookmark from 'lucide-svelte/icons/bookmark';
-import BookmarkCheck from 'lucide-svelte/icons/bookmark-check';
-import BookmarkX from 'lucide-svelte/icons/bookmark-x';
-import { toast } from 'svelte-sonner';
-import getCheckStore from './check-store.svelte';
+	import { enhance } from '$app/forms';
+	import { Button } from '$lib/components/ui/button';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import { getExternalPromise } from '$lib/externalPromise';
+	import Bookmark from 'lucide-svelte/icons/bookmark';
+	import BookmarkCheck from 'lucide-svelte/icons/bookmark-check';
+	import BookmarkX from 'lucide-svelte/icons/bookmark-x';
+	import { toast } from 'svelte-sonner';
+	import getCheckStore from './check-store.svelte';
 
-const store = getCheckStore();
+	const store = getCheckStore();
 
-/** @type {Enchancement} */
-function enhancement() {
-	const { promise, resolve, reject } = getExternalPromise();
+	/** @type {Enchancement} */
+	function enhancement() {
+		const { promise, resolve, reject } = getExternalPromise();
 
-	toast.promise(promise, {
-		loading: 'Setting bookmark...',
-		success: 'bookmark set',
-		error: 'failed to set bookmark',
-	});
+		toast.promise(promise, {
+			loading: 'Setting bookmark...',
+			success: 'bookmark set',
+			error: 'failed to set bookmark'
+		});
 
-	return async ({ result, update }) => {
-		if (result.type === 'error') {
-			reject();
-		} else if (result.type === 'failure') {
-			reject();
-		} else if (result.type === 'redirect') {
-			resolve();
-			update();
-		} else if (result.type === 'success') {
-			resolve();
-			store.close();
-			update();
-		} else {
-			reject();
-		}
-	};
-}
+		return async ({ result, update }) => {
+			if (result.type === 'error') {
+				reject();
+			} else if (result.type === 'failure') {
+				reject();
+			} else if (result.type === 'redirect') {
+				resolve();
+				update();
+			} else if (result.type === 'success') {
+				resolve();
+				store.close();
+				update();
+			} else {
+				reject();
+			}
+		};
+	}
 </script>
 
 <Dialog.Root
@@ -62,26 +62,16 @@ function enhancement() {
 		<Dialog.Footer class="flex gap-1">
 			<form action="/?/bookmarks/check" method="post" use:enhance={enhancement}>
 				<input type="hidden" name="id" value={store.bookmark.id} />
-				<input type="hidden" name="started" value={store.bookmark.started} />
-				<input type="hidden" name="finished" value={store.bookmark.finished} />
+				<input type="hidden" name="finished" value={false} />
 				<Button type="submit" size="icon">
 					<Bookmark />
 				</Button>
 			</form>
 			<form action="/?/bookmarks/check" method="post" use:enhance={enhancement}>
 				<input type="hidden" name="id" value={store.bookmark.id} />
-				<input type="hidden" name="started" value={store.bookmark.started} />
-				<input type="hidden" name="finished" value={store.bookmark.finished} />
+				<input type="hidden" name="finished" value={true} />
 				<Button type="submit" size="icon">
 					<BookmarkCheck />
-				</Button>
-			</form>
-			<form action="/?/bookmarks/check" method="post" use:enhance={enhancement}>
-				<input type="hidden" name="id" value={store.bookmark.id} />
-				<input type="hidden" name="started" value={false} />
-				<input type="hidden" name="finished" value={false} />
-				<Button type="submit" size="icon">
-					<BookmarkX />
 				</Button>
 			</form>
 		</Dialog.Footer>

@@ -1,95 +1,219 @@
-/** @type PTBookmark */
-const bm = {
-	id: '1',
-	title: 'Svelte',
-	href: 'https://svelte.dev/',
-	finished: false,
-	started: true,
-	updated: false,
-	tags: [
-		{ name: 'default', variant: 'default' },
-		{ name: 'destructive', variant: 'destructive' },
-		{ name: 'outline', variant: 'outline' },
-		{ name: 'secondary', variant: 'secondary' },
-	],
-};
+import { env } from '$env/dynamic/private';
+import formUtils from '$lib/server/form-utils.js';
+import { error } from '@sveltejs/kit';
 
-/** @type {Array<PTBookmark>} */
-const bookmarks = [
-	bm,
-	...Array.from({ length: 19 }, (_, i) => ({
-		...bm,
-		title: `${bm.title} ${i + 2}`,
-		id: (i + 2).toString(),
-		finished: i % 2 === 0 ? true : Math.random() > 0.5,
-		started: i % 2 === 0 ? true : Math.random() > 0.5,
-		updated: i % 2 === 0 ? true : Math.random() > 0.5,
-	})),
-];
+/**
+ * @typedef {import('$lib/server/db/schema.js').SelectBookmarkWithTags} SelectBookmarkWithTags
+ */
+
+const baseUrl = 'http://localhost:3000';
+const bookmarksUrl = `${baseUrl}/bookmarks`;
+
+const noBodyHeaders = new Headers({
+	'Content-Type': 'application/json',
+	Authorization: `Bearer ${env.BEARER_TOKEN}`,
+});
+
+const bodyHeaders = new Headers({
+	'Content-Type': 'application/json',
+	Authorization: `Bearer ${env.BEARER_TOKEN}`,
+});
+
+/**
+ * @param {string | undefined} query
+ * @returns {Promise<Array<SelectBookmarkWithTags>>}
+ */
+async function fetchBookmarks(query = undefined) {
+	try {
+		// signal
+		const controller = new AbortController();
+		const timer = setTimeout(() => controller.abort(), 5000);
+
+		const input = query !== undefined ? `${bookmarksUrl}?q=${query}` : bookmarksUrl;
+		const response = await fetch(input, {
+			method: 'GET',
+			cache: 'force-cache',
+			signal: controller.signal,
+			headers: noBodyHeaders,
+		});
+
+		clearTimeout(timer);
+
+		if (!response.ok) {
+			error(500, 'Failed to fetch bookmarks');
+		}
+
+		return response.json();
+	} catch (e) {
+		error(500, 'Failed to fetch bookmarks');
+	}
+}
+
+/**
+ * @param {number} id
+ */
+async function deleteBookmarks(id) {
+	try {
+		// signal
+		const controller = new AbortController();
+		const timer = setTimeout(() => controller.abort(), 5000);
+
+		const response = await fetch(`${bookmarksUrl}/${id}`, {
+			method: 'DELETE',
+			headers: noBodyHeaders,
+		});
+		clearTimeout(timer);
+
+		if (!response.ok) {
+			error(500, 'Failed to delete bookmark');
+		}
+	} catch (e) {
+		error(500, 'Failed to fetch bookmarks');
+	}
+}
+
+/**
+ * @param {number} id
+ * @param {string} name
+ * @param {string} href
+ */
+async function updateBookmarks(id, name, href) {
+	try {
+		// signal
+		const controller = new AbortController();
+		const timer = setTimeout(() => controller.abort(), 5000);
+
+		const response = await fetch(`${bookmarksUrl}/${id}`, {
+			method: 'PUT',
+			body: JSON.stringify({ name, href }),
+			headers: bodyHeaders,
+		});
+		clearTimeout(timer);
+
+		if (!response.ok) {
+			error(500, 'Failed to update bookmark');
+		}
+	} catch (e) {
+		error(500, 'Failed to fetch bookmarks');
+	}
+}
+
+/**
+ * @param {number} id
+ * @param {boolean} finished
+ */
+async function checkBookmark(id, finished) {
+	try {
+		// signal
+		const controller = new AbortController();
+		const timer = setTimeout(() => controller.abort(), 5000);
+
+		const response = await fetch(`${bookmarksUrl}/${id}/check/${finished}`, {
+			method: 'PUT',
+			headers: noBodyHeaders,
+		});
+		clearTimeout(timer);
+
+		if (!response.ok) {
+			error(500, 'Failed to check bookmark');
+		}
+	} catch (e) {
+		error(500, 'Failed to check bookmark');
+	}
+}
+
+/**
+ * @param {string} name
+ * @param {string} href
+ */
+async function createBookmarks(name, href) {
+	try {
+		// signal
+		const controller = new AbortController();
+		const timer = setTimeout(() => controller.abort(), 5000);
+
+		const response = await fetch(`${bookmarksUrl}`, {
+			method: 'POST',
+			body: JSON.stringify({ name, href }),
+			headers: bodyHeaders,
+		});
+		clearTimeout(timer);
+
+		if (!response.ok) {
+			error(500, 'Failed to delete bookmark');
+		}
+	} catch (e) {
+		error(500, 'Failed to fetch bookmarks');
+	}
+}
 
 export const load = async () => {
-	return {
-		bookmarks,
-	};
+	return { bookmarks: await fetchBookmarks() };
 };
 
 export const actions = {
 	search: async ({ request }) => {
 		const data = await request.formData();
-		console.log(data);
 
-		const searchValue = data.get('search');
-		if (searchValue === null) {
-			return { bookmarks };
-		}
-
-		const search = searchValue.toString().trim();
+		const search = formUtils.getString(data, 'search');
+		if (typeof search === 'object') return search;
 
 		if (search.length === 0) {
-			return { bookmarks };
+			return { bookmarks: await fetchBookmarks() };
 		}
 
-		return {
-			bookmarks: bookmarks.filter((bm) => bm.title.includes(search)),
-		};
+		return { bookmarks: await fetchBookmarks(search) };
 	},
 	'bookmarks/create': async ({ request }) => {
 		const data = await request.formData();
-		console.log(data);
-		return { bookmarks };
+
+		const name = formUtils.getString(data, 'name');
+		if (typeof name === 'object') return name;
+
+		const href = formUtils.getString(data, 'href');
+		if (typeof href === 'object') return href;
+
+		await createBookmarks(name, href);
+
+		return { bookmarks: await fetchBookmarks() };
 	},
 	'bookmarks/update': async ({ request }) => {
 		const data = await request.formData();
-		console.log(data);
-		return { bookmarks };
+
+		const id = formUtils.getNumber(data, 'id');
+		if (typeof id === 'object') return id;
+
+		const name = formUtils.getString(data, 'name');
+		if (typeof name === 'object') return name;
+
+		const href = formUtils.getString(data, 'href');
+		if (typeof href === 'object') return href;
+
+		await updateBookmarks(id, name, href);
+
+		return { bookmarks: await fetchBookmarks() };
 	},
 	'bookmarks/delete': async ({ request }) => {
 		const data = await request.formData();
-		console.log(data);
 
-		const idValue = data.get('id');
+		const id = formUtils.getNumber(data, 'id');
+		if (typeof id === 'object') return id;
 
-		if (idValue === null) {
-			return { error: 'No ID provided' };
-		}
+		await deleteBookmarks(id);
 
-		const id = idValue.toString().trim();
-		if (id.length === 0) {
-			return { error: 'ID is empty' };
-		}
-
-		console.log('Deleting bookmark', id, bookmarks.length);
-		bookmarks.splice(
-			bookmarks.findIndex((bm) => bm.id === id),
-			1,
-		);
-		console.log('deleted bookmark', id, bookmarks.length);
-
-		return { bookmarks };
+		return { bookmarks: await fetchBookmarks() };
 	},
 	'bookmarks/check': async ({ request }) => {
 		const data = await request.formData();
-		console.log(data);
-		return { bookmarks };
+
+		const id = formUtils.getNumber(data, 'id');
+		if (typeof id === 'object') return id;
+
+		const finished = formUtils.getBoolean(data, 'finished');
+		if (typeof finished === 'object') return finished;
+
+		await checkBookmark(id, finished);
+
+		return { bookmarks: await fetchBookmarks() };
 	},
 };

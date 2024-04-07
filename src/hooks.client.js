@@ -1,5 +1,4 @@
-/** @type {import('@sveltejs/kit').HandleClientError} */
-async function errorHandler({ error, event, status, message }) {
+export async function handleError({ error, event, status, message }) {
 	console.error('An error occurred on the client side:', status, message, error, event);
 
 	if (error instanceof Error) {
@@ -10,5 +9,3 @@ async function errorHandler({ error, event, status, message }) {
 		message: 'Whoops!',
 	};
 }
-
-export const handleError = errorHandler;

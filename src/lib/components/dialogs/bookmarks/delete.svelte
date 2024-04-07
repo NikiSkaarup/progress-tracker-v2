@@ -1,39 +1,39 @@
 <script>
-import { enhance } from '$app/forms';
-import * as AlertDialog from '$lib/components/ui/alert-dialog';
-import { getExternalPromise } from '$lib/externalPromise';
-import { toast } from 'svelte-sonner';
-import getDeleteStore from './delete-store.svelte';
+	import { enhance } from '$app/forms';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog';
+	import { getExternalPromise } from '$lib/externalPromise';
+	import { toast } from 'svelte-sonner';
+	import getDeleteStore from './delete-store.svelte';
 
-const store = getDeleteStore();
+	const store = getDeleteStore();
 
-/** @type {Enchancement} */
-function enhancement() {
-	const { promise, resolve, reject } = getExternalPromise();
+	/** @type {Enchancement} */
+	function enhancement() {
+		const { promise, resolve, reject } = getExternalPromise();
 
-	toast.promise(promise, {
-		loading: 'Deleting bookmark...',
-		success: 'bookmark deleted',
-		error: 'failed to delete bookmark',
-	});
+		toast.promise(promise, {
+			loading: 'Deleting bookmark...',
+			success: 'bookmark deleted',
+			error: 'failed to delete bookmark'
+		});
 
-	return async ({ result, update }) => {
-		if (result.type === 'error') {
-			reject();
-		} else if (result.type === 'failure') {
-			reject();
-		} else if (result.type === 'redirect') {
-			resolve();
-			update();
-		} else if (result.type === 'success') {
-			resolve();
-			store.close();
-			update();
-		} else {
-			reject();
-		}
-	};
-}
+		return async ({ result, update }) => {
+			if (result.type === 'error') {
+				reject();
+			} else if (result.type === 'failure') {
+				reject();
+			} else if (result.type === 'redirect') {
+				resolve();
+				update();
+			} else if (result.type === 'success') {
+				resolve();
+				store.close();
+				update();
+			} else {
+				reject();
+			}
+		};
+	}
 </script>
 
 <AlertDialog.Root
