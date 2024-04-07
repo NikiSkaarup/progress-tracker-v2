@@ -33,6 +33,7 @@ WORKDIR /app
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /app/ .
 
+ENV PORT=3010
 # run the app
 USER bun
 EXPOSE 3010/tcp
