@@ -34,6 +34,12 @@ COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /app/ .
 
 ENV PORT=3010
+
+ENV BEARER_TOKEN $BEARER_TOKEN
+ENV API_SERVICE_URL $API_SERVICE_URL
+ENV SQLITE_DB_PATH $SQLITE_DB_PATH
+ENV SQLITE_DB_NAME $SQLITE_DB_NAME
+
 # run the app
 USER bun
 EXPOSE 3010/tcp
