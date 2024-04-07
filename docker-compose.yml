@@ -6,6 +6,11 @@ services:
     image: nikiskaarup/progress-tracker-v2:latest
     pull_policy: build
     ports:
-      - "3010:3000"
+      - "3010:3010"
     container_name: progress-tracker-v2
     restart: unless-stopped
+    environment:
+      - BEARER_TOKEN=${BEARER_TOKEN}
+      - API_SERVICE_URL=${API_SERVICE_URL}
+      - SQLITE_DB_PATH=${SQLITE_DB_PATH}
+      - SQLITE_DB_NAME=${SQLITE_DB_NAME}
