@@ -9,6 +9,8 @@ services:
       - "3010:3010"
     container_name: progress-tracker-v2
     restart: unless-stopped
+    volumes:
+      - ./data:/app/data
     environment:
       - BEARER_TOKEN=${BEARER_TOKEN}
       - API_SERVICE_URL=${API_SERVICE_URL}
