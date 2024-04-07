@@ -16,6 +16,7 @@ services:
       API_SERVICE_URL: ${API_SERVICE_URL}
       SQLITE_DB_PATH: ${SQLITE_DB_PATH}
       SQLITE_DB_NAME: ${SQLITE_DB_NAME}
+      ORIGIN: ${ORIGIN}
 
 volumes:
   data:
