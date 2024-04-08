@@ -1,10 +1,13 @@
 <script>
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import { getExternalPromise } from '$lib/externalPromise';
+	import { getExternalPromise } from '$lib/external-promise';
+	import queryParam from '$lib/query-param';
 	import Search from 'lucide-svelte/icons/search';
 	import { toast } from 'svelte-sonner';
 
@@ -26,10 +29,10 @@
 	<Card.Content class="p-0 pb-6">
 		<form
 			bind:this={form}
-			action="/?/search"
+			action="/?/search{queryParam($page)}"
 			method="post"
 			class="flex flex-col gap-2"
-			use:enhance={() => {
+			use:enhance={({ formData }) => {
 				const { promise, resolve, reject } = getExternalPromise();
 
 				toast.promise(promise, {
@@ -56,6 +59,19 @@
 						}
 
 						bookmarks = data.bookmarks;
+
+						const q = formData.get('search');
+
+						if (q !== null) {
+							$page.url.searchParams.set('q', q.toString());
+						} else {
+							$page.url.searchParams.delete('q');
+						}
+						goto($page.url, {
+							replaceState: true,
+							keepFocus: true,
+							invalidateAll: false
+						});
 					} else {
 						reject();
 					}
@@ -69,6 +85,7 @@
 					id="search"
 					name="search"
 					type="search"
+					value={$page.url.searchParams.get('q') ?? ''}
 					oninput={() => {
 						clearTimeout(timeout);
 						timeout = setTimeout(() => form.requestSubmit(), 200);

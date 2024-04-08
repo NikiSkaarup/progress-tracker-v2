@@ -1,7 +1,9 @@
 <script>
 	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
-	import { getExternalPromise } from '$lib/externalPromise';
+	import { getExternalPromise } from '$lib/external-promise';
+	import queryParam from '$lib/query-param';
 	import { toast } from 'svelte-sonner';
 	import getDeleteStore from './delete-store.svelte';
 
@@ -58,7 +60,11 @@
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<form action="/?/bookmarks/delete" method="post" use:enhance={enhancement}>
+			<form
+				action="/?/bookmarks/delete{queryParam($page)}"
+				method="post"
+				use:enhance={enhancement}
+			>
 				<input name="id" type="hidden" value={store.bookmark.id} />
 				<AlertDialog.Action type="submit">Continue</AlertDialog.Action>
 			</form>

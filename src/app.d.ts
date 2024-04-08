@@ -9,6 +9,7 @@ declare global {
 		interface Locals {
 			requestId: string;
 		}
+		// interface PageState {}
 		// interface PageData {}
 		// interface Error {}
 		// interface Platform {}

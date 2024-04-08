@@ -1,8 +1,9 @@
 import api from '$lib/server/api';
 import formUtils from '$lib/server/form-utils.js';
 
-export const load = async () => {
-	return { bookmarks: await api.bookmarks.query() };
+export const load = async ({ url }) => {
+	const q = url.searchParams.get('q');
+	return { bookmarks: await api.bookmarks.query(q) };
 };
 
 export const actions = {
@@ -18,7 +19,7 @@ export const actions = {
 
 		return { bookmarks: await api.bookmarks.query(search) };
 	},
-	'bookmarks/create': async ({ request }) => {
+	'bookmarks/create': async ({ request, url }) => {
 		const data = await request.formData();
 
 		const name = formUtils.getString(data, 'name');
@@ -29,9 +30,10 @@ export const actions = {
 
 		await api.bookmarks.create(name, href);
 
-		return { bookmarks: await api.bookmarks.query() };
+		const q = url.searchParams.get('q');
+		return { bookmarks: await api.bookmarks.query(q) };
 	},
-	'bookmarks/update': async ({ request }) => {
+	'bookmarks/update': async ({ request, url }) => {
 		const data = await request.formData();
 
 		const id = formUtils.getNumber(data, 'id');
@@ -45,9 +47,10 @@ export const actions = {
 
 		await api.bookmarks.update(id, name, href);
 
-		return { bookmarks: await api.bookmarks.query() };
+		const q = url.searchParams.get('q');
+		return { bookmarks: await api.bookmarks.query(q) };
 	},
-	'bookmarks/delete': async ({ request }) => {
+	'bookmarks/delete': async ({ request, url }) => {
 		const data = await request.formData();
 
 		const id = formUtils.getNumber(data, 'id');
@@ -55,9 +58,10 @@ export const actions = {
 
 		await api.bookmarks.remove(id);
 
-		return { bookmarks: await api.bookmarks.query() };
+		const q = url.searchParams.get('q');
+		return { bookmarks: await api.bookmarks.query(q) };
 	},
-	'bookmarks/check': async ({ request }) => {
+	'bookmarks/check': async ({ request, url }) => {
 		const data = await request.formData();
 
 		const id = formUtils.getNumber(data, 'id');
@@ -68,6 +72,7 @@ export const actions = {
 
 		await api.bookmarks.check(id, finished);
 
-		return { bookmarks: await api.bookmarks.query() };
+		const q = url.searchParams.get('q');
+		return { bookmarks: await api.bookmarks.query(q) };
 	},
 };

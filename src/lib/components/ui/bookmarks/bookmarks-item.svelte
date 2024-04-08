@@ -56,9 +56,11 @@
 			</span>
 		</div>
 		<div class="flex items-center gap-1.5">
-			{#each bookmark.tags as tag (tag.id)}
-				<Badge variant={tag.variant}>{tag.name}</Badge>
-			{/each}
+			{#if Array.isArray(bookmark.tags)}
+				{#each bookmark.tags as tag (tag.id)}
+					<Badge variant={tag.variant}>{tag.name}</Badge>
+				{/each}
+			{/if}
 
 			<Button variant="ghost" size="icon" onclick={() => deleteStore.open(bookmark)}>
 				<Trash2 />

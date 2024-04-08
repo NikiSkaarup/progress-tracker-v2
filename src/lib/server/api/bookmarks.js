@@ -19,16 +19,16 @@ const bodyHeaders = new Headers({
 });
 
 /**
- * @param {string | undefined} q
+ * @param {string | null} q
  * @returns {Promise<Array<SelectBookmarkWithTags>>}
  */
-async function query(q = undefined) {
+async function query(q = null) {
 	try {
 		// signal
 		const controller = new AbortController();
 		const timer = setTimeout(() => controller.abort(), 5000);
 
-		const input = q !== undefined ? `${bookmarksUrl}?q=${q}` : bookmarksUrl;
+		const input = q !== null ? `${bookmarksUrl}?q=${q}` : bookmarksUrl;
 		const response = await fetch(input, {
 			method: 'GET',
 			signal: controller.signal,
