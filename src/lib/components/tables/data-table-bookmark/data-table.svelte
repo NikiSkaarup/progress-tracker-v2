@@ -1,18 +1,21 @@
 <script>
+	import { invalidateAll } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Input } from '$lib/components/ui/input';
 	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
 	import * as Table from '$lib/components/ui/table';
+	import { Toggle } from '$lib/components/ui/toggle';
 	import { yyyyMMddhhmm } from '$lib/date-formatter';
 	import { cn } from '$lib/utils';
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import ChevronUpDown from 'lucide-svelte/icons/chevrons-up-down';
+	import RefreshCW from 'lucide-svelte/icons/refresh-cw';
 	import { Render, Subscribe, createRender, createTable } from 'svelte-headless-table';
 	import {
 		addHiddenColumns,
 		addPagination,
-		addSelectedRows,
+		// addSelectedRows,
 		addSortBy,
 		addTableFilter
 	} from 'svelte-headless-table/plugins';
@@ -36,7 +39,7 @@
 		filter: addTableFilter({
 			fn: ({ filterValue, value }) => value.includes(filterValue)
 		}),
-		select: addSelectedRows(),
+		// select: addSelectedRows(),
 		hide: addHiddenColumns()
 	});
 
@@ -105,31 +108,49 @@
 		.filter(([, hide]) => !hide)
 		.map(([id]) => id);
 
-	const { hasNextPage, hasPreviousPage, pageIndex, pageSize, pageCount } = pluginStates.page;
+	const { hasNextPage, hasPreviousPage, pageIndex, pageCount } = pluginStates.page;
 	const { filterValue } = pluginStates.filter;
-	const { selectedDataIds } = pluginStates.select;
+	// const { selectedDataIds } = pluginStates.select;
 
 	const hideableCols = ['id', 'finished', 'createdAt', 'updatedAt'];
+
+	/** @type {Timer} */
+	let timer;
+
+	let enableInterval = false;
+
+	$: if (enableInterval) {
+		timer = setInterval(invalidateAll, 5000);
+	} else {
+		clearInterval(timer);
+	}
 </script>
 
-<div class="flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-4">
+<div
+	class="flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between md:gap-4"
+>
 	<Input class="max-w-sm" placeholder="Filter name..." type="text" bind:value={$filterValue} />
-	<DropdownMenu.Root>
-		<DropdownMenu.Trigger asChild let:builder>
-			<Button variant="outline" class="md:ml-auto" builders={[builder]}>
-				Columns <ChevronDown class="ml-2 h-4 w-4" />
-			</Button>
-		</DropdownMenu.Trigger>
-		<DropdownMenu.Content>
-			{#each flatColumns as col}
-				{#if hideableCols.includes(col.id)}
-					<DropdownMenu.CheckboxItem bind:checked={hideForId[col.id]}>
-						{col.header}
-					</DropdownMenu.CheckboxItem>
-				{/if}
-			{/each}
-		</DropdownMenu.Content>
-	</DropdownMenu.Root>
+	<div class="flex items-center gap-2">
+		<Toggle aria-label="Toggle auto refresh" variant="outline" bind:pressed={enableInterval}>
+			<RefreshCW />
+		</Toggle>
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger asChild let:builder>
+				<Button variant="outline" builders={[builder]}>
+					Columns <ChevronDown class="ml-2 h-4 w-4" />
+				</Button>
+			</DropdownMenu.Trigger>
+			<DropdownMenu.Content>
+				{#each flatColumns as col}
+					{#if hideableCols.includes(col.id)}
+						<DropdownMenu.CheckboxItem bind:checked={hideForId[col.id]}>
+							{col.header}
+						</DropdownMenu.CheckboxItem>
+					{/if}
+				{/each}
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
+	</div>
 </div>
 <div class="rounded-md border">
 	<ScrollArea orientation="horizontal">
@@ -146,11 +167,7 @@
 									let:props
 								>
 									<Table.Head {...attrs}>
-										{#if cell.id === 'id'}
-											<span class="font-mono">
-												<Render of={cell.render()} />
-											</span>
-										{:else if cell.id === 'name' || cell.id === 'updatedAt'}
+										{#if cell.id === 'name' || cell.id === 'updatedAt'}
 											<Button variant="ghost" on:click={props.sort.toggle}>
 												<Render of={cell.render()} />
 												<ChevronUpDown
@@ -174,10 +191,8 @@
 			<Table.Body {...$tableBodyAttrs}>
 				{#each $pageRows as row (row.id)}
 					<Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-						<Table.Row
-							{...rowAttrs}
-							data-state={$selectedDataIds[row.id] && 'selected'}
-						>
+						<Table.Row {...rowAttrs}>
+							<!-- data-state={$selectedDataIds[row.id] && 'selected'} -->
 							{#each row.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs>
 									<Table.Cell {...attrs}>
