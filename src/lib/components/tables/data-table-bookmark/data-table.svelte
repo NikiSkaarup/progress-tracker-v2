@@ -1,5 +1,6 @@
 <script>
 	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Input } from '$lib/components/ui/input';
@@ -37,7 +38,8 @@
 			initialPageSize: 15
 		}),
 		filter: addTableFilter({
-			fn: ({ filterValue, value }) => value.includes(filterValue)
+			initialFilterValue: $page.url.searchParams.get('q') ?? '',
+			fn: ({ filterValue, value }) => value.includes(filterValue.toLowerCase())
 		}),
 		// select: addSelectedRows(),
 		hide: addHiddenColumns()
