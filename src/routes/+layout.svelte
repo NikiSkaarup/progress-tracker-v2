@@ -12,7 +12,7 @@
 </script>
 
 <!-- <ModeWatcher /> -->
-<Toaster duration={2000} closeButton={true} richColors={true} />
+<Toaster class="dark" duration={2000} closeButton={true} richColors={true} />
 
 <Head />
 

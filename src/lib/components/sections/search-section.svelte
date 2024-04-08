@@ -11,6 +11,12 @@
 	/** @typedef {import('$lib/server/db/schema.js').SelectBookmarkWithTags} SelectBookmarkWithTags */
 	/** @type {{bookmarks: Array<SelectBookmarkWithTags>}} */
 	let { bookmarks = $bindable() } = $props();
+
+	/** @type {HTMLFormElement} */
+	let form;
+
+	/** @type {Timer | undefined}*/
+	let timeout;
 </script>
 
 <Card.Root class="breakout content grid rounded-none">
@@ -19,6 +25,7 @@
 	</Card.Header>
 	<Card.Content class="p-0 pb-6">
 		<form
+			bind:this={form}
 			action="/?/search"
 			method="post"
 			class="flex flex-col gap-2"
@@ -62,6 +69,10 @@
 					id="search"
 					name="search"
 					type="search"
+					oninput={() => {
+						clearTimeout(timeout);
+						timeout = setTimeout(() => form.requestSubmit(), 200);
+					}}
 				/>
 				<Button type="submit" variant="ghost" size="icon">
 					<Search />
