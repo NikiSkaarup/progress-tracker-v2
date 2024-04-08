@@ -13,7 +13,7 @@
 	});
 </script>
 
-<article class="content grid">
+<article class="content grid pb-24">
 	<PageHeading>
 		{#snippet title()}
 			Progress Tracker

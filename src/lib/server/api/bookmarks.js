@@ -31,7 +31,6 @@ async function query(q = undefined) {
 		const input = q !== undefined ? `${bookmarksUrl}?q=${q}` : bookmarksUrl;
 		const response = await fetch(input, {
 			method: 'GET',
-			cache: 'force-cache',
 			signal: controller.signal,
 			headers: noBodyHeaders,
 		});
@@ -39,6 +38,7 @@ async function query(q = undefined) {
 		clearTimeout(timer);
 
 		if (!response.ok) {
+			console.log(response);
 			error(500, 'Failed to fetch bookmarks');
 		}
 

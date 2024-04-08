@@ -26,8 +26,8 @@
 		className
 	)}
 >
-	<div class="flex items-center justify-between">
-		<div class="flex items-center gap-2">
+	<div class="flex items-center justify-between gap-2">
+		<div class="grid grid-cols-[auto_auto_auto_1fr] items-center gap-2">
 			<a
 				href={bookmark.href}
 				target="_blank"
@@ -55,8 +55,8 @@
 				{bookmark.name}
 			</span>
 		</div>
-		<div class="flex items-center gap-1">
-			{#each bookmark.tags as tag}
+		<div class="flex items-center gap-1.5">
+			{#each bookmark.tags as tag (tag.id)}
 				<Badge variant={tag.variant}>{tag.name}</Badge>
 			{/each}
 
