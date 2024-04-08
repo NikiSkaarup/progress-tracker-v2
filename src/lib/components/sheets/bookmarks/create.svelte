@@ -1,12 +1,10 @@
 <script>
 	import { enhance } from '$app/forms';
-	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { getExternalPromise } from '$lib/external-promise.js';
-	import queryParam from '$lib/query-param.js';
 	import { toast } from 'svelte-sonner';
 	import getBookmarkCreate from './create-store.svelte.js';
 
@@ -60,7 +58,7 @@
 		</Sheet.Header>
 		<form
 			id="create-bookmark-form"
-			action="/?/bookmarks/create{queryParam($page)}"
+			action="/?/bookmarks/create"
 			method="post"
 			class="grid gap-4 py-4"
 			use:enhance={enhancement}

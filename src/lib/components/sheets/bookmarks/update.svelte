@@ -6,11 +6,16 @@
 	import { Label } from '$lib/components/ui/label';
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { getExternalPromise } from '$lib/external-promise';
-	import queryParam from '$lib/query-param';
 	import { toast } from 'svelte-sonner';
 	import getUpdateStore from './update-store.svelte';
 
+	/** @typedef {import('$lib/server/db/schema.js').SelectBookmarkWithTags} SelectBookmarkWithTags */
+	/** @typedef {Array<SelectBookmarkWithTags>} Bookmarks */
+
 	const store = getUpdateStore();
+
+	let bookmarks = $derived(/** @type {Bookmarks} */ ($page.data.bookmarks ?? []));
+	let bookmark = $derived(bookmarks.find((bm) => bm.id === store.id) ?? { name: '', href: '' });
 
 	/** @type {Enchancement} */
 	function enhancement() {
@@ -49,7 +54,7 @@
 		if (!event.valueOf()) {
 			store.close();
 		} else {
-			store.open(store.bookmark);
+			store.open(store.id);
 		}
 	}}
 >
@@ -60,12 +65,12 @@
 		</Sheet.Header>
 		<form
 			id="update-bookmark-form"
-			action="/?/bookmarks/update{queryParam($page)}"
+			action="/?/bookmarks/update"
 			method="post"
 			class="grid gap-4 py-4"
 			use:enhance={enhancement}
 		>
-			<input name="id" type="hidden" value={store.bookmark.id} />
+			<input name="id" type="hidden" value={store.id} />
 			<div class="grid grid-cols-4 items-center gap-4">
 				<Label for="href" class="text-right">Href</Label>
 				<Input
@@ -73,7 +78,7 @@
 					name="href"
 					placeholder="https://example.com"
 					class="col-span-3"
-					bind:value={store.bookmark.href}
+					bind:value={bookmark.href}
 				/>
 			</div>
 			<div class="grid grid-cols-4 items-center gap-4">
@@ -83,7 +88,7 @@
 					name="name"
 					placeholder="Example"
 					class="col-span-3"
-					bind:value={store.bookmark.name}
+					bind:value={bookmark.name}
 				/>
 			</div>
 			TODO: Add tags

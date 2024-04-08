@@ -1,22 +1,20 @@
 let isOpen = $state(false);
 
-/** @typedef {import('$lib/server/db/schema.js').SelectBookmark} SelectBookmark */
+let _id = $state(-1);
 
-/** @type {SelectBookmark | undefined} */
-let bookmark = $state();
-
-/** @param inputBookmark {SelectBookmark | undefined} */
-function open(inputBookmark) {
-	if (!inputBookmark) {
-		console.error("Can't open edit bookmark sheet without a bookmark");
+/** @param {number} id */
+function open(id) {
+	if (id < 0) {
+		console.error("Can't open edit bookmark sheet without a bookmark id");
 		return;
 	}
 	isOpen = true;
-	bookmark = { ...inputBookmark };
+	_id = id;
 }
 
 function close() {
 	isOpen = false;
+	_id = -1;
 }
 
 export default function getEditStore() {
@@ -24,8 +22,8 @@ export default function getEditStore() {
 		get isOpen() {
 			return isOpen;
 		},
-		get bookmark() {
-			return /** @type {SelectBookmark} */ (bookmark);
+		get id() {
+			return _id;
 		},
 		open,
 		close,

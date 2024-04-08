@@ -1,30 +1,30 @@
 <script>
-	import SearchSection from '$lib/components/sections/search-section.svelte';
-	import * as Bookmarks from '$lib/components/ui/bookmarks';
-	import PageHeading from '$lib/components/ui/page-heading.svelte';
+	import DataTable from '$lib/components/tables/data-table-bookmark/data-table.svelte';
+	import * as Card from '$lib/components/ui/card';
+	import { writable } from 'svelte/store';
 
-	let { data, form } = $props();
-	let bookmarks = $state(data.bookmarks);
+	let { data } = $props();
+
+	let bookmarks = writable(data.bookmarks);
 
 	$effect(() => {
-		if (Array.isArray(form?.bookmarks)) {
-			bookmarks = form.bookmarks;
-		}
+		bookmarks.set(data.bookmarks);
 	});
 </script>
 
-<article class="content grid pb-24">
-	<PageHeading>
+<article class="content grid pt-8 pb-24">
+	<!-- <PageHeading>
 		{#snippet title()}
 			Progress Tracker
 		{/snippet}
-	</PageHeading>
+	</PageHeading> -->
 
-	<SearchSection bind:bookmarks />
-
-	<Bookmarks.Root>
-		{#each bookmarks as bookmark, i (bookmark.id)}
-			<Bookmarks.Item {bookmark} {i}></Bookmarks.Item>
-		{/each}
-	</Bookmarks.Root>
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>Bookmarks</Card.Title>
+		</Card.Header>
+		<Card.Content class="flex flex-col gap-2">
+			<DataTable data={bookmarks} />
+		</Card.Content>
+	</Card.Root>
 </article>

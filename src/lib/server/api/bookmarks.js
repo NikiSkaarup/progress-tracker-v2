@@ -73,10 +73,9 @@ async function remove(id) {
 
 /**
  * @param {number} id
- * @param {string} name
- * @param {string} href
+ * @param {{name: string; href: string}} body
  */
-async function update(id, name, href) {
+async function update(id, body) {
 	try {
 		// signal
 		const controller = new AbortController();
@@ -84,7 +83,7 @@ async function update(id, name, href) {
 
 		const response = await fetch(`${bookmarksUrl}/${id}`, {
 			method: 'PUT',
-			body: JSON.stringify({ name, href }),
+			body: JSON.stringify(body),
 			headers: bodyHeaders,
 		});
 		clearTimeout(timer);
@@ -122,10 +121,9 @@ async function check(id, finished) {
 }
 
 /**
- * @param {string} name
- * @param {string} href
+ * @param {{name: string; href: string}} body
  */
-async function create(name, href) {
+async function create(body) {
 	try {
 		// signal
 		const controller = new AbortController();
@@ -133,7 +131,7 @@ async function create(name, href) {
 
 		const response = await fetch(`${bookmarksUrl}`, {
 			method: 'POST',
-			body: JSON.stringify({ name, href }),
+			body: JSON.stringify(body),
 			headers: bodyHeaders,
 		});
 		clearTimeout(timer);

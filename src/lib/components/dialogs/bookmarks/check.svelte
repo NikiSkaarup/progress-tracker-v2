@@ -1,10 +1,8 @@
 <script>
 	import { enhance } from '$app/forms';
-	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { getExternalPromise } from '$lib/external-promise';
-	import queryParam from '$lib/query-param';
 	import Bookmark from 'lucide-svelte/icons/bookmark';
 	import BookmarkCheck from 'lucide-svelte/icons/bookmark-check';
 	import { toast } from 'svelte-sonner';
@@ -49,7 +47,7 @@
 		if (!event.valueOf()) {
 			store.close();
 		} else {
-			store.open(store.bookmark);
+			store.open(store.id);
 		}
 	}}
 >
@@ -61,23 +59,15 @@
 			</Dialog.Description>
 		</Dialog.Header>
 		<Dialog.Footer class="flex gap-1">
-			<form
-				action="/?/bookmarks/check{queryParam($page)}"
-				method="post"
-				use:enhance={enhancement}
-			>
-				<input type="hidden" name="id" value={store.bookmark.id} />
+			<form action="/?/bookmarks/check" method="post" use:enhance={enhancement}>
+				<input type="hidden" name="id" value={store.id} />
 				<input type="hidden" name="finished" value={false} />
 				<Button type="submit" size="icon">
 					<Bookmark />
 				</Button>
 			</form>
-			<form
-				action="/?/bookmarks/check{queryParam($page)}"
-				method="post"
-				use:enhance={enhancement}
-			>
-				<input type="hidden" name="id" value={store.bookmark.id} />
+			<form action="/?/bookmarks/check" method="post" use:enhance={enhancement}>
+				<input type="hidden" name="id" value={store.id} />
 				<input type="hidden" name="finished" value={true} />
 				<Button type="submit" size="icon">
 					<BookmarkCheck />

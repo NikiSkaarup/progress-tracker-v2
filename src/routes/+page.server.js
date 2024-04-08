@@ -1,25 +1,12 @@
 import api from '$lib/server/api';
 import formUtils from '$lib/server/form-utils.js';
 
-export const load = async ({ url }) => {
-	const q = url.searchParams.get('q');
-	return { bookmarks: await api.bookmarks.query(q) };
+export const load = async () => {
+	return { bookmarks: await api.bookmarks.query() };
 };
 
 export const actions = {
-	search: async ({ request }) => {
-		const data = await request.formData();
-
-		const search = formUtils.getString(data, 'search');
-		if (typeof search === 'object') return search;
-
-		if (search.length === 0) {
-			return { bookmarks: await api.bookmarks.query() };
-		}
-
-		return { bookmarks: await api.bookmarks.query(search) };
-	},
-	'bookmarks/create': async ({ request, url }) => {
+	'bookmarks/create': async ({ request }) => {
 		const data = await request.formData();
 
 		const name = formUtils.getString(data, 'name');
@@ -28,12 +15,9 @@ export const actions = {
 		const href = formUtils.getString(data, 'href');
 		if (typeof href === 'object') return href;
 
-		await api.bookmarks.create(name, href);
-
-		const q = url.searchParams.get('q');
-		return { bookmarks: await api.bookmarks.query(q) };
+		await api.bookmarks.create({ name, href });
 	},
-	'bookmarks/update': async ({ request, url }) => {
+	'bookmarks/update': async ({ request }) => {
 		const data = await request.formData();
 
 		const id = formUtils.getNumber(data, 'id');
@@ -45,23 +29,17 @@ export const actions = {
 		const href = formUtils.getString(data, 'href');
 		if (typeof href === 'object') return href;
 
-		await api.bookmarks.update(id, name, href);
-
-		const q = url.searchParams.get('q');
-		return { bookmarks: await api.bookmarks.query(q) };
+		await api.bookmarks.update(id, { name, href });
 	},
-	'bookmarks/delete': async ({ request, url }) => {
+	'bookmarks/delete': async ({ request }) => {
 		const data = await request.formData();
 
 		const id = formUtils.getNumber(data, 'id');
 		if (typeof id === 'object') return id;
 
 		await api.bookmarks.remove(id);
-
-		const q = url.searchParams.get('q');
-		return { bookmarks: await api.bookmarks.query(q) };
 	},
-	'bookmarks/check': async ({ request, url }) => {
+	'bookmarks/check': async ({ request }) => {
 		const data = await request.formData();
 
 		const id = formUtils.getNumber(data, 'id');
@@ -71,8 +49,5 @@ export const actions = {
 		if (typeof finished === 'object') return finished;
 
 		await api.bookmarks.check(id, finished);
-
-		const q = url.searchParams.get('q');
-		return { bookmarks: await api.bookmarks.query(q) };
 	},
 };
