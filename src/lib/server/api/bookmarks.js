@@ -64,10 +64,10 @@ async function remove(id) {
 		clearTimeout(timer);
 
 		if (!response.ok) {
-			error(500, 'Failed to delete bookmark');
+			error(500, 'Failed to remove bookmark');
 		}
 	} catch (e) {
-		error(500, 'Failed to fetch bookmarks');
+		error(500, 'Failed to remove bookmark');
 	}
 }
 
@@ -93,7 +93,7 @@ async function update(id, name, href) {
 			error(500, 'Failed to update bookmark');
 		}
 	} catch (e) {
-		error(500, 'Failed to fetch bookmarks');
+		error(500, 'Failed to update bookmark');
 	}
 }
 
@@ -139,10 +139,10 @@ async function create(name, href) {
 		clearTimeout(timer);
 
 		if (!response.ok) {
-			error(500, 'Failed to delete bookmark');
+			error(500, 'Failed to create bookmark');
 		}
 	} catch (e) {
-		error(500, 'Failed to fetch bookmarks');
+		error(500, 'Failed to create bookmark');
 	}
 }
 
