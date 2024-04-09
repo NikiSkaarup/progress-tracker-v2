@@ -5,6 +5,7 @@ export const load = async () => {
 	return { bookmarks: await api.bookmarks.query() };
 };
 
+/** @type {import('./$types').Actions} */
 export const actions = {
 	'bookmarks/create': async ({ request }) => {
 		const data = await request.formData();
@@ -49,5 +50,5 @@ export const actions = {
 		if (typeof finished === 'object') return finished;
 
 		await api.bookmarks.check(id, finished);
-	},
+	}
 };

@@ -131,7 +131,16 @@
 <div
 	class="flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between md:gap-4"
 >
-	<Input class="max-w-sm" placeholder="Filter name..." type="text" bind:value={$filterValue} />
+	<Input
+		class="max-w-sm"
+		placeholder="Filter name..."
+		type="text"
+		bind:value={$filterValue}
+		on:input={() => {
+			const value = $filterValue.trim();
+			window.history.replaceState(null, '', `?q=${encodeURIComponent(value)}`);
+		}}
+	/>
 	<div class="flex items-center gap-2">
 		<Toggle aria-label="Toggle auto refresh" variant="outline" bind:pressed={enableInterval}>
 			<RefreshCW />
@@ -162,20 +171,14 @@
 					<Subscribe rowAttrs={headerRow.attrs()}>
 						<Table.Row>
 							{#each headerRow.cells as cell (cell.id)}
-								<Subscribe
-									attrs={cell.attrs()}
-									let:attrs
-									props={cell.props()}
-									let:props
-								>
+								<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
 									<Table.Head {...attrs}>
 										{#if cell.id === 'name' || cell.id === 'updatedAt'}
 											<Button variant="ghost" on:click={props.sort.toggle}>
 												<Render of={cell.render()} />
 												<ChevronUpDown
 													class={cn(
-														$sortKeys[0]?.id === cell.id &&
-															'text-foreground',
+														$sortKeys[0]?.id === cell.id && 'text-foreground',
 														'ml-2 h-4 w-4'
 													)}
 												/>
