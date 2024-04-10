@@ -50,5 +50,5 @@ export const actions = {
 		if (typeof finished === 'object') return finished;
 
 		await api.bookmarks.check(id, finished);
-	}
+	},
 };
