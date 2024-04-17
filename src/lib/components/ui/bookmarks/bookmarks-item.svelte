@@ -37,16 +37,16 @@
 				<Link2 />
 			</a>
 
-			<Button variant="ghost" size="icon" onclick={() => updateStore.open(bookmark)}>
+			<Button variant="ghost" size="icon" onclick={() => updateStore.open(bookmark.id)}>
 				<PenLine />
 			</Button>
 
 			{#if bookmark.finished}
-				<Button variant="ghost" size="icon" onclick={() => checkStore.open(bookmark)}>
+				<Button variant="ghost" size="icon" onclick={() => checkStore.open(bookmark.id)}>
 					<BookmarkCheck />
 				</Button>
 			{:else}
-				<Button variant="ghost" size="icon" onclick={() => checkStore.open(bookmark)}>
+				<Button variant="ghost" size="icon" onclick={() => checkStore.open(bookmark.id)}>
 					<Bookmark />
 				</Button>
 			{/if}
@@ -62,7 +62,7 @@
 				{/each}
 			{/if}
 
-			<Button variant="ghost" size="icon" onclick={() => deleteStore.open(bookmark)}>
+			<Button variant="ghost" size="icon" onclick={() => deleteStore.open(bookmark.id)}>
 				<Trash2 />
 			</Button>
 		</div>

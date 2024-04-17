@@ -17,6 +17,7 @@ services:
       SQLITE_DB_PATH: ${SQLITE_DB_PATH}
       SQLITE_DB_NAME: ${SQLITE_DB_NAME}
       ORIGIN: ${ORIGIN}
+    network_mode: bridge
 
 volumes:
   data:

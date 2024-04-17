@@ -13,12 +13,6 @@
 </script>
 
 <article class="content grid pt-8 pb-24">
-	<!-- <PageHeading>
-		{#snippet title()}
-			Progress Tracker
-		{/snippet}
-	</PageHeading> -->
-
 	<Card.Root>
 		<Card.Header>
 			<Card.Title>Bookmarks</Card.Title>

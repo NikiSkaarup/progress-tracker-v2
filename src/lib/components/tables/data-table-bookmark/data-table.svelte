@@ -171,14 +171,20 @@
 					<Subscribe rowAttrs={headerRow.attrs()}>
 						<Table.Row>
 							{#each headerRow.cells as cell (cell.id)}
-								<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
+								<Subscribe
+									attrs={cell.attrs()}
+									let:attrs
+									props={cell.props()}
+									let:props
+								>
 									<Table.Head {...attrs}>
 										{#if cell.id === 'name' || cell.id === 'updatedAt'}
 											<Button variant="ghost" on:click={props.sort.toggle}>
 												<Render of={cell.render()} />
 												<ChevronUpDown
 													class={cn(
-														$sortKeys[0]?.id === cell.id && 'text-foreground',
+														$sortKeys[0]?.id === cell.id &&
+															'text-foreground',
 														'ml-2 h-4 w-4'
 													)}
 												/>
