@@ -48,5 +48,3 @@ export const tag = sqliteTable('tag', {
 });
 
 /** @typedef {import('drizzle-orm').InferSelectModel<typeof bookmark>} SelectBookmark */
-/** @typedef {SelectBookmark & {tags: Array<import('drizzle-orm').InferSelectModel<typeof tag>>}} SelectBookmarkWithTags */
-/** @typedef {SelectBookmark & {tags?: Array<import('drizzle-orm').InferSelectModel<typeof tag>>}} SelectBookmarkWithOptionalTags */

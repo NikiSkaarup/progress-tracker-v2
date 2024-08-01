@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 
 /**
- * @typedef {import('$lib/server/db/schema.js').SelectBookmarkWithTags} SelectBookmarkWithTags
+ * @typedef {import('$lib/server/db/schema.js').SelectBookmark} SelectBookmark
  */
 
 const baseUrl = env.API_SERVICE_URL;
@@ -20,7 +20,7 @@ const bodyHeaders = new Headers({
 
 /**
  * @param {string | null} q
- * @returns {Promise<Array<SelectBookmarkWithTags>>}
+ * @returns {Promise<Array<SelectBookmark>>}
  */
 async function query(q = null) {
 	try {

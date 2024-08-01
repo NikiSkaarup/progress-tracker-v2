@@ -23,9 +23,9 @@
 	import Actions from './data-table-actions.svelte';
 	import Name from './data-table-name.svelte';
 
-	/** @typedef {import('$lib/server/db/schema.js').SelectBookmarkWithTags} SelectBookmarkWithTags */
+	/** @typedef {import('$lib/server/db/schema.js').SelectBookmark} SelectBookmark */
 
-	/** @type {import('svelte/store').Writable<Array<SelectBookmarkWithTags>>} */
+	/** @type {import('svelte/store').Writable<Array<SelectBookmark>>} */
 	export let data;
 
 	const table = createTable(data, {
