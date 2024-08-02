@@ -1,5 +1,7 @@
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
+// @ts-ignore
+import { fetch } from 'bun';
 
 /**
  * @typedef {import('$lib/server/db/schema.js').SelectBookmark} SelectBookmark
@@ -23,17 +25,11 @@ const bodyHeaders = new Headers({
  */
 async function query() {
 	try {
-		// signal
-		const controller = new AbortController();
-		const timer = setTimeout(() => controller.abort(), 5000);
-
 		const response = await fetch(bookmarksUrl, {
 			method: 'GET',
-			signal: controller.signal,
+			signal: AbortSignal.timeout(5000),
 			headers: noBodyHeaders,
 		});
-
-		clearTimeout(timer);
 
 		if (!response.ok) {
 			console.error(response);
@@ -52,15 +48,11 @@ async function query() {
  */
 async function remove(id) {
 	try {
-		// signal
-		const controller = new AbortController();
-		const timer = setTimeout(() => controller.abort(), 5000);
-
 		const response = await fetch(`${bookmarksUrl}/${id}`, {
 			method: 'DELETE',
+			signal: AbortSignal.timeout(5000),
 			headers: noBodyHeaders,
 		});
-		clearTimeout(timer);
 
 		if (!response.ok) {
 			error(500, 'Failed to remove bookmark');
@@ -76,16 +68,12 @@ async function remove(id) {
  */
 async function update(id, body) {
 	try {
-		// signal
-		const controller = new AbortController();
-		const timer = setTimeout(() => controller.abort(), 5000);
-
 		const response = await fetch(`${bookmarksUrl}/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify(body),
+			signal: AbortSignal.timeout(5000),
 			headers: bodyHeaders,
 		});
-		clearTimeout(timer);
 
 		if (!response.ok) {
 			error(500, 'Failed to update bookmark');
@@ -101,15 +89,11 @@ async function update(id, body) {
  */
 async function check(id, finished) {
 	try {
-		// signal
-		const controller = new AbortController();
-		const timer = setTimeout(() => controller.abort(), 5000);
-
 		const response = await fetch(`${bookmarksUrl}/${id}/check/${finished}`, {
 			method: 'PUT',
+			signal: AbortSignal.timeout(5000),
 			headers: noBodyHeaders,
 		});
-		clearTimeout(timer);
 
 		if (!response.ok) {
 			error(500, 'Failed to check bookmark');
@@ -124,16 +108,12 @@ async function check(id, finished) {
  */
 async function create(body) {
 	try {
-		// signal
-		const controller = new AbortController();
-		const timer = setTimeout(() => controller.abort(), 5000);
-
 		const response = await fetch(`${bookmarksUrl}`, {
 			method: 'POST',
 			body: JSON.stringify(body),
+			signal: AbortSignal.timeout(5000),
 			headers: bodyHeaders,
 		});
-		clearTimeout(timer);
 
 		if (!response.ok) {
 			error(500, 'Failed to create bookmark');
@@ -143,4 +123,4 @@ async function create(body) {
 	}
 }
 
-export { query, remove, update, check, create };
+export default { query, remove, update, check, create };

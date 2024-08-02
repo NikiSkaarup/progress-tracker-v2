@@ -1,8 +1,8 @@
-import api from '$lib/server/api';
+import bookmarks from '$lib/server/api/bookmarks.js';
 import formUtils from '$lib/server/form-utils.js';
 
 export const load = async () => {
-	return { bookmarks: await api.bookmarks.query() };
+	return { bookmarks: await bookmarks.query() };
 };
 
 /** @type {import('./$types').Actions} */
@@ -16,7 +16,7 @@ export const actions = {
 		const href = formUtils.getString(data, 'href');
 		if (typeof href === 'object') return href;
 
-		await api.bookmarks.create({ name, href });
+		await bookmarks.create({ name, href });
 	},
 	'bookmarks/update': async ({ request }) => {
 		const data = await request.formData();
@@ -30,7 +30,7 @@ export const actions = {
 		const href = formUtils.getString(data, 'href');
 		if (typeof href === 'object') return href;
 
-		await api.bookmarks.update(id, { name, href });
+		await bookmarks.update(id, { name, href });
 	},
 	'bookmarks/delete': async ({ request }) => {
 		const data = await request.formData();
@@ -38,7 +38,7 @@ export const actions = {
 		const id = formUtils.getNumber(data, 'id');
 		if (typeof id === 'object') return id;
 
-		await api.bookmarks.remove(id);
+		await bookmarks.remove(id);
 	},
 	'bookmarks/check': async ({ request }) => {
 		const data = await request.formData();
@@ -49,6 +49,6 @@ export const actions = {
 		const finished = formUtils.getBoolean(data, 'finished');
 		if (typeof finished === 'object') return finished;
 
-		await api.bookmarks.check(id, finished);
+		await bookmarks.check(id, finished);
 	},
 };

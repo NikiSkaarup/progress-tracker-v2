@@ -2,12 +2,12 @@ import { json } from '@sveltejs/kit';
 
 export const GET = async () =>
 	json({
-		name: 'Niki Wix Skaarup',
-		short_name: 'NWS',
+		name: 'Progress Tracker',
+		short_name: 'PT',
 		display: 'browser',
 		background_color: '#141141',
 		theme_color: '#371D85',
-		description: 'Portfolio / Blog',
+		description: 'Progress Tracker',
 		icons: [],
 		related_applications: [],
 	});
