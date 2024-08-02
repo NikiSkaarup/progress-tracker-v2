@@ -23,7 +23,14 @@
 	import Actions from './data-table-actions.svelte';
 	import Name from './data-table-name.svelte';
 
-	/** @typedef {import('$lib/server/db/schema.js').SelectBookmark} SelectBookmark */
+	/** @typedef {{
+		id: number;
+		name: string;
+		href: string;
+		finished: boolean;
+		created_at: number;
+		updated_at: number;
+	}} SelectBookmark */
 
 	/** @type {import('svelte/store').Writable<Array<SelectBookmark>>} */
 	export let data;
@@ -31,7 +38,7 @@
 	const table = createTable(data, {
 		sort: addSortBy({
 			disableMultiSort: true,
-			initialSortKeys: [{ id: 'updatedAt', order: 'desc' }]
+			initialSortKeys: [{ id: 'updated_at', order: 'desc' }]
 		}),
 		page: addPagination({
 			initialPageIndex: 0,
@@ -59,7 +66,12 @@
 			plugins: {
 				filter: {
 					getFilterValue(value) {
-						return value.name.toLowerCase();
+						return value.name;
+					}
+				},
+				sort: {
+					getSortValue(value) {
+						return value.name;
 					}
 				}
 			}
@@ -72,25 +84,21 @@
 		}),
 		table.column({
 			header: 'Created',
-			accessor: 'createdAt',
-			cell: (item) => yyyyMMddhhmm.format(Date.parse(item.value.toString())),
+			accessor: 'created_at',
+			cell: (item) => yyyyMMddhhmm.format(item.value),
 			plugins: { sort: { disable: true }, filter: { exclude: true } }
 		}),
 		table.column({
 			header: 'Updated',
-			accessor: 'updatedAt',
-			cell: (item) => yyyyMMddhhmm.format(Date.parse(item.value.toString())),
+			accessor: 'updated_at',
+			cell: (item) => yyyyMMddhhmm.format(item.value),
 			plugins: { filter: { exclude: true } }
 		}),
 		table.column({
 			header: '',
 			accessor: ({ id, href, finished }) => ({ id, href, finished }),
 			cell: (item) => createRender(Actions, item.value),
-			plugins: {
-				sort: {
-					disable: true
-				}
-			}
+			plugins: { sort: { disable: true } }
 		})
 	]);
 
@@ -102,7 +110,8 @@
 	const { hiddenColumnIds } = pluginStates.hide;
 	const ids = flatColumns.map((c) => c.id);
 
-	const initialHiddenColumnIds = ['id', 'finished', 'createdAt'];
+	/** @type {Array<keyof SelectBookmark>} */
+	const initialHiddenColumnIds = ['id', 'finished', 'created_at'];
 
 	let hideForId = Object.fromEntries(ids.map((id) => [id, !initialHiddenColumnIds.includes(id)]));
 
@@ -114,7 +123,8 @@
 	const { filterValue } = pluginStates.filter;
 	// const { selectedDataIds } = pluginStates.select;
 
-	const hideableCols = ['id', 'finished', 'createdAt', 'updatedAt'];
+	/** @type {Array<keyof SelectBookmark>} */
+	const hideableCols = ['id', 'finished', 'created_at', 'updated_at'];
 
 	/** @type {Timer} */
 	let timer;
@@ -178,7 +188,7 @@
 									let:props
 								>
 									<Table.Head {...attrs}>
-										{#if cell.id === 'name' || cell.id === 'updatedAt'}
+										{#if cell.id === 'name' || cell.id === 'updated_at'}
 											<Button variant="ghost" on:click={props.sort.toggle}>
 												<Render of={cell.render()} />
 												<ChevronUpDown
@@ -207,7 +217,7 @@
 							{#each row.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs>
 									<Table.Cell {...attrs}>
-										{#if cell.id === 'id' || cell.id === 'createdAt' || cell.id === 'updatedAt'}
+										{#if cell.id === 'id' || cell.id === 'created_at' || cell.id === 'updated_at'}
 											<span class="inline-block text-nowrap font-mono">
 												<Render of={cell.render()} />
 											</span>

@@ -1,9 +1,14 @@
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 
-/**
- * @typedef {import('$lib/server/db/schema.js').SelectBookmark} SelectBookmark
- */
+/** @typedef {{
+	id: number;
+	name: string;
+	href: string;
+	finished: boolean;
+	created_at: number;
+	updated_at: number;
+	}} SelectBookmark */
 
 const baseUrl = env.API_SERVICE_URL;
 const bookmarksUrl = `${baseUrl}/bookmarks`;
@@ -24,12 +29,12 @@ async function query() {
 	try {
 		const response = await fetch(bookmarksUrl, {
 			method: 'GET',
-			signal: AbortSignal.timeout(5000),
+			signal: AbortSignal.timeout(50000),
 			headers: noBodyHeaders,
 		});
 
 		if (!response.ok) {
-			console.error(response);
+			console.error(response.status, response.statusText, await response.text());
 			error(500, 'Failed to fetch bookmarks');
 		}
 

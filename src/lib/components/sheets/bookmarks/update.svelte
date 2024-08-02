@@ -9,8 +9,15 @@
 	import { toast } from 'svelte-sonner';
 	import getUpdateStore from './update-store.svelte';
 
-	/** @typedef {import('$lib/server/db/schema.js').SelectBookmarkWithTags} SelectBookmarkWithTags */
-	/** @typedef {Array<SelectBookmarkWithTags>} Bookmarks */
+	/** @typedef {{
+		id: number;
+		name: string;
+		href: string;
+		finished: boolean;
+		created_at: number;
+		updated_at: number;
+	}} SelectBookmark */
+	/** @typedef {Array<SelectBookmark>} Bookmarks */
 
 	const store = getUpdateStore();
 

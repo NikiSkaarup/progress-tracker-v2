@@ -22,7 +22,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@eslym/svelte-adapter-bun": "^0.5.9",
-    "@sveltejs/kit": "^2.5.19",
+    "@sveltejs/kit": "^2.5.20",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.5",
     "@tailwindcss/vite": "^4.0.0-alpha.18",
     "@types/bun": "latest",
@@ -37,8 +37,7 @@
     "prettier": "^4.0.0-alpha.9",
     "svelte-check": "^3.8.5",
     "svelte-headless-table": "^0.18.2",
-    "svelte": "5.0.0-next.207",
-    "sveltekit-plugin-console": "^0.1.11",
+    "svelte": "5.0.0-next.208",
     "tailwindcss": "^4.0.0-alpha.18",
     "typescript": "^5.5.4",
     "vite": "^6.0.0-alpha.19"
