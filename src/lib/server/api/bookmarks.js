@@ -10,7 +10,7 @@ const bookmarksUrl = `${baseUrl}/bookmarks`;
 
 const noBodyHeaders = new Headers({
 	'Content-Type': 'application/json',
-	Authorization: `	 ${env.BEARER_TOKEN}`,
+	Authorization: `${env.BEARER_TOKEN}`,
 });
 
 const bodyHeaders = new Headers({
