@@ -10,7 +10,7 @@ const bookmarksUrl = `${baseUrl}/bookmarks`;
 
 const noBodyHeaders = new Headers({
 	'Content-Type': 'application/json',
-	Authorization: `Bearer ${env.BEARER_TOKEN}`,
+	Authorization: `	 ${env.BEARER_TOKEN}`,
 });
 
 const bodyHeaders = new Headers({
@@ -19,17 +19,15 @@ const bodyHeaders = new Headers({
 });
 
 /**
- * @param {string | null} q
  * @returns {Promise<Array<SelectBookmark>>}
  */
-async function query(q = null) {
+async function query() {
 	try {
 		// signal
 		const controller = new AbortController();
 		const timer = setTimeout(() => controller.abort(), 5000);
 
-		const input = q !== null ? `${bookmarksUrl}?q=${q}` : bookmarksUrl;
-		const response = await fetch(input, {
+		const response = await fetch(bookmarksUrl, {
 			method: 'GET',
 			signal: controller.signal,
 			headers: noBodyHeaders,
@@ -38,12 +36,13 @@ async function query(q = null) {
 		clearTimeout(timer);
 
 		if (!response.ok) {
-			console.log(response);
+			console.error(response);
 			error(500, 'Failed to fetch bookmarks');
 		}
 
 		return response.json();
 	} catch (e) {
+		console.error(e);
 		error(500, 'Failed to fetch bookmarks');
 	}
 }

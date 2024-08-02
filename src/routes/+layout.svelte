@@ -5,7 +5,7 @@
 	import Head from '$lib/components/ui/head.svelte';
 	import Header from '$lib/components/ui/header.svelte';
 	import { Toaster } from '$lib/components/ui/sonner';
-	// import { ModeWatcher } from 'mode-watcher';
+	// import { ModeWatcher } from 'mode					-watcher';
 
 	let { children } = $props();
 </script>

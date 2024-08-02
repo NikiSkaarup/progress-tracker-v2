@@ -1,4 +1,3 @@
-import { dev } from '$app/environment';
 import colors from '$lib/server/colors';
 import { nanoid } from 'nanoid';
 
@@ -10,13 +9,7 @@ export async function handle({ event, resolve }) {
 	const result = await resolve(event);
 	performance.measure(`request ${requestId}`, requestId);
 	return result;
-	// return resolve(event);
 }
-
-// export async function handleFetch({ request, fetch }) {
-// 	return fetch(request);
-// }
-
 /** @type {import('@sveltejs/kit').HandleServerError} */
 export async function handleError({ error, event, status, message }) {
 	console.error('An error occurred on the server side:', status, message, error, event);
@@ -45,8 +38,7 @@ function observerCallback(entries) {
 	}
 }
 
-if (dev) {
-	if (globalThis.performanceObserver) globalThis.performanceObserver.disconnect();
-	globalThis.performanceObserver = new PerformanceObserver(observerCallback);
-	globalThis.performanceObserver.observe({ entryTypes: ['measure'] });
-}
+// @ts-ignore
+if (globalThis.performanceObserver) globalThis.performanceObserver.disconnect();
+globalThis.performanceObserver = new PerformanceObserver(observerCallback);
+globalThis.performanceObserver.observe({ entryTypes: ['measure'] });
