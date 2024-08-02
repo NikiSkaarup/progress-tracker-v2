@@ -1,7 +1,5 @@
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
-// @ts-ignore
-import { fetch } from 'bun';
 
 /**
  * @typedef {import('$lib/server/db/schema.js').SelectBookmark} SelectBookmark
@@ -11,7 +9,6 @@ const baseUrl = env.API_SERVICE_URL;
 const bookmarksUrl = `${baseUrl}/bookmarks`;
 
 const noBodyHeaders = new Headers({
-	'Content-Type': 'application/json',
 	Authorization: `Bearer ${env.BEARER_TOKEN}`,
 });
 
