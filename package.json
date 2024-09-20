@@ -9,7 +9,7 @@
     "studio": "bunx --bun drizzle-kit studio --config=./drizzle.config.js",
     "start": "bun run ./build",
     "dev": "bunx --bun vite dev",
-    "build": "bunx --bun vite build",
+    "build": "bunx --bun svelte-kit sync && bunx --bun vite build",
     "preview": "bunx --bun vite preview",
     "build:preview": "bunx --bun vite build && PORT=5173 bun ./build",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
